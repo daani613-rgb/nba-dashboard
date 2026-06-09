@@ -104,6 +104,9 @@
   .note code{font-family:var(--mono);background:var(--panel2);padding:2px 7px;border-radius:5px;
     color:var(--amber);font-size:11.5px}
   @media(max-width:580px){.strip{grid-template-columns:repeat(2,1fr)}.tr-grid{grid-template-columns:1fr}h1{font-size:26px}}
+  .empty-state{grid-column:1/-1;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:28px 24px;text-align:center;color:var(--muted);
+    font-size:15px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -162,11 +165,12 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-09 08:00", "lastGood": "2026-06-09 08:00"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-09 21:32", "lastGood": "2026-06-09 21:32"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
-const CALIB = [{"band": "60–70%", "actual": 62, "n": 1959}, {"band": "70–80%", "actual": 73, "n": 1390}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 85, "n": 248}];
-const PICKS = [{"date": "2026-06-09", "home": "NYK", "away": "SAS", "pick": "NYK", "road": false, "prob": 58, "home_prob": 0.579, "stage": 8, "name": "פריצת הדרך", "cellAcc": 69, "cellN": 540, "ok": null}];
-const TRACK = {"acc": 81, "n": 622};
+const CALIB = [{"band": "60–70%", "actual": 62, "n": 1963}, {"band": "70–80%", "actual": 73, "n": 1393}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 86, "n": 249}];
+const PICKS = [];
+const TRACK = {"acc": 81, "n": 623};
+const STATE = {"games": 0, "picks": 0, "offseason": false};
 // ===DATA_END===
 
 // ---- i18n ----
@@ -193,6 +197,9 @@ const I18N = {
     vs:"vs", pickLbl:"Pick: ", home:"· home", road:"· away, vs home",
     conf:"% confidence", cellHist1:"this cell historically: ", cellSmall:"small sample",
     pend:"⏳ pending", correct:"✓ correct", missed:"✗ missed",
+    offseasonMsg:"🏀 Offseason — no games right now. The engine returns when the season tips off (around late October). The historical record below stands.",
+    scannedMsg:"Scanned {n} games today · none met the confidence bar. The engine is selective — that's the discipline.",
+    noGamesMsg:"No NBA games scheduled today. Check back on a game day.",
   },
   he:{
     h1:"לוח הניבויים",
@@ -216,6 +223,9 @@ const I18N = {
     vs:"נגד", pickLbl:"הניבוי: ", home:"· בית", road:"· חוץ, נגד הבית",
     conf:"% ביטחון", cellHist1:"שילוב זה היסטורית: ", cellSmall:"מדגם קטן",
     pend:"⏳ ממתין", correct:"✓ צדק", missed:"✗ החטיא",
+    offseasonMsg:"🏀 מחוץ לעונה — אין משחקים כרגע. המנוע חוזר כשהעונה נפתחת (סביב סוף אוקטובר). הרשומה ההיסטורית למטה עומדת בעינה.",
+    scannedMsg:"נסרקו {n} משחקים היום · אף אחד לא עבר את סף הביטחון. המנוע בררן — זו המשמעת.",
+    noGamesMsg:"אין משחקי NBA מתוכננים היום. חזור ביום משחק.",
   },
 };
 const STAGE = {
@@ -256,6 +266,14 @@ function render(filter){
   currentFilter = filter;
   const grid=document.getElementById("grid");
   const rows=PICKS.filter(p=> filter==="all" || [6,8,9].includes(p.stage)).sort((a,b)=>b.prob-a.prob);
+  if(rows.length===0){
+    let msg;
+    if(typeof STATE!=="undefined" && STATE.offseason) msg = t("offseasonMsg");
+    else if(typeof STATE!=="undefined" && STATE.games>0) msg = t("scannedMsg").replace("{n}", STATE.games);
+    else msg = t("noGamesMsg");
+    grid.innerHTML = `<div class="empty-state">${msg}</div>`;
+    return;
+  }
   const vs=`<span style="color:var(--faint);font-size:14px">${t("vs")}</span>`;
   grid.innerHTML = rows.map(p=>{
     const homePick=p.pick===p.home;
