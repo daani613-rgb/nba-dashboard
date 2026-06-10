@@ -165,7 +165,7 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-09 21:32", "lastGood": "2026-06-09 21:32"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-10 06:18", "lastGood": "2026-06-10 06:18"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 62, "n": 1963}, {"band": "70–80%", "actual": 73, "n": 1393}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 86, "n": 249}];
 const PICKS = [];
@@ -197,6 +197,9 @@ const I18N = {
     vs:"vs", pickLbl:"Pick: ", home:"· home", road:"· away, vs home",
     conf:"% confidence", cellHist1:"this cell historically: ", cellSmall:"small sample",
     pend:"⏳ pending", correct:"✓ correct", missed:"✗ missed",
+    fatLabelSevere:"⚠️ Bad schedule spot: favorite on a road back-to-back (sharpest)",
+    fatLabelNormal:"⚠️ Bad schedule spot: favorite on a back-to-back",
+    fatVsBase:"vs base", fatNote:"Higher upset chance — a bias flag, not a prediction.",
     offseasonMsg:"🏀 Offseason — no games right now. The engine returns when the season tips off (around late October). The historical record below stands.",
     scannedMsg:"Scanned {n} games today · none met the confidence bar. The engine is selective — that's the discipline.",
     noGamesMsg:"No NBA games scheduled today. Check back on a game day.",
@@ -223,6 +226,9 @@ const I18N = {
     vs:"נגד", pickLbl:"הניבוי: ", home:"· בית", road:"· חוץ, נגד הבית",
     conf:"% ביטחון", cellHist1:"שילוב זה היסטורית: ", cellSmall:"מדגם קטן",
     pend:"⏳ ממתין", correct:"✓ צדק", missed:"✗ החטיא",
+    fatLabelSevere:"⚠️ עמדת-לוח רעה: הפייבוריט ביציאה לדרכים (החריף ביותר)",
+    fatLabelNormal:"⚠️ עמדת-לוח רעה: הפייבוריט במשחק שני ברצף",
+    fatVsBase:"מול בסיס", fatNote:"סיכוי הפתעה מוגבר — דגל הטיה, לא נבואה.",
     offseasonMsg:"🏀 מחוץ לעונה — אין משחקים כרגע. המנוע חוזר כשהעונה נפתחת (סביב סוף אוקטובר). הרשומה ההיסטורית למטה עומדת בעינה.",
     scannedMsg:"נסרקו {n} משחקים היום · אף אחד לא עבר את סף הביטחון. המנוע בררן — זו המשמעת.",
     noGamesMsg:"אין משחקי NBA מתוכננים היום. חזור ביום משחק.",
@@ -283,6 +289,16 @@ function render(filter){
     const oc = p.ok===null ? `<span class="outcome pend">${t("pend")}</span>`
                            : `<span class="outcome ${p.ok?'ok':'no'}">${p.ok?t("correct"):t("missed")}</span>`;
     const sname = (STAGE[LANG]&&STAGE[LANG][p.stage]!==undefined)?STAGE[LANG][p.stage]:STAGE.en[p.stage];
+    let fatHtml = "";
+    if(p.fatigue){
+      const sev = p.fatigue.severity==="severe";
+      fatHtml = `<div style="margin-top:8px;padding:6px 9px;border-radius:6px;font-size:12px;line-height:1.4;`+
+        `border:1px solid ${sev?'rgba(240,160,32,.4)':'var(--line)'};`+
+        `background:${sev?'rgba(240,160,32,.08)':'rgba(255,255,255,.03)'};`+
+        `color:${sev?'#f0a020':'var(--mut)'}">`+
+        `${sev?t("fatLabelSevere"):t("fatLabelNormal")} · ~${p.fatigue.upset_pct}% ${t("fatVsBase")} ~${p.fatigue.base_pct}%`+
+        `<div style="color:var(--faint);font-size:11px;margin-top:2px">${t("fatNote")}</div></div>`;
+    }
     return `
     <div class="card">
       <div class="top"><span class="date">${p.date}</span>${oc}</div>
@@ -292,6 +308,7 @@ function render(filter){
         <div class="conf-top"><span class="v">${p.prob}<small>${t("conf")}</small></span></div>
         <div class="conf-bar"><i style="width:${p.prob}%;background:${col}"></i></div>
       </div>
+      ${fatHtml}
       <div class="foot">
         <span class="badge ${tr}"><span class="num">${p.stage}</span> ${sname}</span>
         <span class="cell">${cell}</span>
