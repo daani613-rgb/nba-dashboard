@@ -34,6 +34,18 @@
     text-transform:uppercase;margin-bottom:7px}
   h1{font-family:var(--serif);font-weight:900;font-size:33px;line-height:1.08}
   .sub{color:var(--muted);font-size:13.5px;margin-top:6px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+  .howto-hint{margin-top:9px;background:transparent;border:1px solid var(--line);color:var(--muted);font-size:12.5px;padding:4px 11px;border-radius:7px;cursor:pointer;font-family:inherit}
+  .howto-hint:hover{color:var(--ink);border-color:var(--muted)}
+  #howto{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:6px 16px;margin-bottom:14px}
+  #howto summary{cursor:pointer;font-size:15px;font-weight:600;color:var(--ink);padding:10px 0;list-style:none}
+  #howto summary::-webkit-details-marker{display:none}
+  #howto summary::before{content:"▸ ";color:var(--muted)}
+  #howto[open] summary::before{content:"▾ "}
+  .howto-body{display:flex;flex-direction:column;gap:2px;padding:2px 0 12px}
+  .howto-h{font-size:14.5px;font-weight:600;color:var(--ink);margin:14px 0 3px}
+  .howto-p{font-size:13.5px;color:var(--muted);line-height:1.6;margin:0}
+  .howto-note{font-size:13.5px;color:var(--ink);line-height:1.6;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:11px 13px;margin:9px 0 0}
+  .howto-warn{color:#f0a020}
   .tag{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:3px 11px;
     font-size:11px;color:var(--muted);font-family:var(--mono)}
   .fresh{font-family:var(--mono);font-size:12px;border-radius:9px;padding:8px 13px;margin-bottom:18px;
@@ -45,7 +57,7 @@
   .section-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:26px 0 12px}
   .section-h h2{margin:0}
 
-  .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
   .kpi{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px 13px}
   .kpi .n{font-family:var(--serif);font-weight:900;font-size:25px;color:var(--ink)}
   .kpi .n small{font-size:14px;color:var(--faint)}
@@ -103,7 +115,10 @@
   .note h3{font-family:var(--serif);color:var(--ink);font-size:15px;margin-bottom:7px}
   .note code{font-family:var(--mono);background:var(--panel2);padding:2px 7px;border-radius:5px;
     color:var(--amber);font-size:11.5px}
-  @media(max-width:580px){.strip{grid-template-columns:repeat(2,1fr)}.tr-grid{grid-template-columns:1fr}h1{font-size:26px}}
+  @media(max-width:580px){.tr-grid{grid-template-columns:1fr}h1{font-size:26px}}
+  .empty-state{grid-column:1/-1;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:28px 24px;text-align:center;color:var(--muted);
+    font-size:15px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -120,6 +135,7 @@
       </div>
     </div>
     <div class="sub"><span data-i18n="sub"></span> <span class="tag" data-i18n="tag"></span></div>
+    <button id="howtoHint" class="howto-hint" onclick="openHowto()" data-i18n="howtoHint"></button>
   </header>
 
   <div id="freshness" class="fresh"></div>
@@ -129,6 +145,7 @@
     <div class="kpi"><div class="n">76<small>%</small></div><div class="l" data-i18n="kpi2l"></div><div class="b" data-i18n="kpi2b"></div></div>
     <div class="kpi"><div class="n">85<small>%</small></div><div class="l" data-i18n="kpi3l"></div><div class="b" data-i18n="kpi3b"></div></div>
     <div class="kpi"><div class="n">15,428</div><div class="l" data-i18n="kpi4l"></div><div class="b" data-i18n="kpi4b"></div></div>
+    <div class="kpi"><div class="n">+10<small>pp</small></div><div class="l" data-i18n="kpi5l"></div><div class="b" data-i18n="kpi5b"></div></div>
   </div>
 
   <h2 data-i18n="perf"></h2>
@@ -155,6 +172,17 @@
   </div>
   <div class="grid" id="grid"></div>
 
+  <details id="howto">
+    <summary data-i18n="howAccTitle"></summary>
+    <div class="howto-body">
+      <h3 class="howto-h" data-i18n="howto1Title"></h3><p class="howto-p" data-i18n="howto1"></p>
+      <h3 class="howto-h" data-i18n="howto2Title"></h3><p class="howto-p" data-i18n="howto2"></p>
+      <h3 class="howto-h" data-i18n="howto3Title"></h3><p class="howto-p" data-i18n="howto3"></p>
+      <h3 class="howto-h" data-i18n="howto4Title"></h3><p class="howto-p" data-i18n="howto4"></p>
+      <h3 class="howto-h howto-warn" data-i18n="howto5Title"></h3><p class="howto-note" data-i18n="howto5"></p>
+    </div>
+  </details>
+
   <div class="note">
     <h3 data-i18n="noteH"></h3>
     <span data-i18n-html="noteBody"></span>
@@ -162,11 +190,12 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-09 08:00", "lastGood": "2026-06-09 08:00"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-10 03:04", "lastGood": "2026-06-10 03:04"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
-const CALIB = [{"band": "60–70%", "actual": 62, "n": 1959}, {"band": "70–80%", "actual": 73, "n": 1390}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 85, "n": 248}];
-const PICKS = [{"date": "2026-06-09", "home": "NYK", "away": "SAS", "pick": "NYK", "road": false, "prob": 58, "home_prob": 0.579, "stage": 8, "name": "פריצת הדרך", "cellAcc": 69, "cellN": 540, "ok": null}];
-const TRACK = {"acc": 81, "n": 622};
+const CALIB = [{"band": "60–70%", "actual": 62, "n": 1963}, {"band": "70–80%", "actual": 73, "n": 1393}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 86, "n": 249}];
+const PICKS = [];
+const TRACK = {"acc": 81, "n": 623};
+const STATE = {"games": 0, "picks": 0, "offseason": false};
 // ===DATA_END===
 
 // ---- i18n ----
@@ -179,6 +208,7 @@ const I18N = {
     kpi2l:"Against-home call \u226570%",      kpi2b:"base 43% · stable",
     kpi3l:"High stage 6/8/9",                 kpi3b:"stable in holdout",
     kpi4l:"Games trained on",                 kpi4b:"5 separate test seasons",
+    kpi5l:"Upset chance on a tired favorite (road b2b)", kpi5b:"base ~36% · stable 9/12 seasons",
     perf:"Engine performance",
     trHead:"Confidence zone (\u226580%) · test seasons",
     trNote:"The live journal fills in here as games close.",
@@ -186,6 +216,18 @@ const I18N = {
     calibNote:"Good calibration = the bar (prediction) close to the number (actual). That's what separates a reliable model from a guess.",
     recent:"Recent predictions",
     fAll:"All", fHigh:"High stage only",
+    howtoHint:"New here? How to read this page →",
+    howAccTitle:"How to read this page",
+    howto1Title:"What this page shows",
+    howto1:`Every NBA game today appears here as a card, sorted by how confident the engine is — most confident on top. Each card shows the engine's pick and its win chance. The page shows all games, not just the strong ones; the confidence bar is what tells them apart.`,
+    howto2Title:"Confidence and A+",
+    howto2:`The win chance is how likely the engine thinks the pick is to win — basketball has no draw, so it's just two outcomes: this team or the other. A pick at 80% means the engine expects it to win about 4 times out of 5. "A+" marks the highest-confidence calls (the engine's strongest zone). High confidence is not certainty — even an 80% pick loses about 1 time in 5.`,
+    howto3Title:"Calibration",
+    howto3:`Calibration asks a simple question: when the engine says 80%, does the thing actually happen about 80% of the time? The bars at the top of the page compare what the engine predicted against what really happened, across test seasons it never trained on. When the two line up, the percentages mean what they say — that's what separates a reliable engine from a guess.`,
+    howto4Title:"The fatigue tag — 'bad schedule spot'",
+    howto4:`Some cards carry a "bad schedule spot" tag. It appears when the favorite is playing its second game on consecutive nights (a back-to-back) and that second game involves moving between cities — either heading out on the road or coming back home — while the underdog is rested. Why it matters: a tired team that traveled tends to play a little worse, so the upset chance rises — from a base of about 36% up to around 46% in the sharpest case (the favorite heading out on the road). Amber marks that sharpest spot; a muted tag marks the milder one (the return trip home). This is a verified historical finding — stable across 9 of the last 12 seasons — and it will start tagging live games when the new season begins.`,
+    howto5Title:"The caveat",
+    howto5:`The fatigue tag is a bias flag, not a prediction. It does not say the favorite will lose — it only says the upset chance is higher than usual. The favorite still wins most of the time. And like the rest of the engine, this was tested against historical results and naive logic, not against bookmaker lines — it's an edge in reading the game, not a promise of easy money.`,
     noteH:"How it goes live",
     noteBody:`Every number is real, measured on 15,428 games — but historical. For live predictions the engine runs on your machine: <code>python fetch_current_season.py</code> then <code>python run_daily.py</code>, which writes the day's predictions straight to the board. Each percent label is the real accuracy measured for that confidence × stage cell; a cell with too small a sample shows "small sample" instead of a number.`,
     freshOk:"Last updated: ", freshStale1:"⚠ Last update failed — showing data from ", freshUnknown:"unknown",
@@ -193,6 +235,12 @@ const I18N = {
     vs:"vs", pickLbl:"Pick: ", home:"· home", road:"· away, vs home",
     conf:"% confidence", cellHist1:"this cell historically: ", cellSmall:"small sample",
     pend:"⏳ pending", correct:"✓ correct", missed:"✗ missed",
+    fatLabelSevere:"⚠️ Bad schedule spot: favorite on a road back-to-back (sharpest)",
+    fatLabelNormal:"⚠️ Bad schedule spot: favorite on a back-to-back",
+    fatVsBase:"vs base", fatNote:"Higher upset chance — a bias flag, not a prediction.",
+    offseasonMsg:"🏀 Offseason — no games right now. The engine returns when the season tips off (around late October). The historical record below stands.",
+    scannedMsg:"Scanned {n} games today · none met the confidence bar. The engine is selective — that's the discipline.",
+    noGamesMsg:"No NBA games scheduled today. Check back on a game day.",
   },
   he:{
     h1:"לוח הניבויים",
@@ -202,6 +250,7 @@ const I18N = {
     kpi2l:"קריאה נגד הבית \u226570%", kpi2b:"בסיס 43% · יציב",
     kpi3l:"שלב גבוה 6/8/9", kpi3b:"יציב בהולד-אאוט",
     kpi4l:"משחקים באימון", kpi4b:"5 עונות מבחן נפרד",
+    kpi5l:"סיכוי הפתעה על פייבוריט עייף (b2b בדרכים)", kpi5b:"בסיס ~36% · יציב 9/12 עונות",
     perf:"ביצועי המנוע",
     trHead:"אזור הביטחון (\u226580%) · עונות מבחן",
     trNote:"היומן החי יתעדכן כאן ככל שמשחקים נסגרים.",
@@ -209,6 +258,18 @@ const I18N = {
     calibNote:"כיול טוב = העמודה (ניבוי) קרובה למספר (בפועל). זה מה שמפריד מודל אמין מניחוש.",
     recent:"ניבויים אחרונים",
     fAll:"הכל", fHigh:"רק שלב גבוה",
+    howtoHint:"חדש כאן? איך לקרוא את הדף ←",
+    howAccTitle:"איך לקרוא את הדף",
+    howto1Title:"מה הדף מראה",
+    howto1:`כל משחק NBA של היום מופיע כאן ככרטיס, ממוין לפי כמה המנוע בטוח — הבטוח ביותר למעלה. כל כרטיס מראה את הבחירה של המנוע ואת סיכוי הניצחון. הדף מציג את כל המשחקים, לא רק את החזקים; פס הביטחון הוא מה שמבדיל ביניהם.`,
+    howto2Title:"ביטחון ו-A+",
+    howto2:`סיכוי הניצחון הוא כמה המנוע מעריך שהבחירה תנצח — בכדורסל אין תיקו, אז יש רק שתי תוצאות: הקבוצה הזו או השנייה. בחירה ב-80% אומרת שהמנוע מצפה שהיא תנצח בערך 4 פעמים מתוך 5. "A+" מסמן את הקריאות עם הביטחון הגבוה ביותר (האזור החזק של המנוע). ביטחון גבוה הוא לא ודאות — גם בחירה של 80% מפסידה בערך פעם אחת מכל 5.`,
+    howto3Title:"כיול",
+    howto3:`כיול שואל שאלה פשוטה: כשהמנוע אומר 80%, האם הדבר באמת קורה בערך 80% מהפעמים? הפסים בראש הדף משווים את מה שהמנוע ניבא מול מה שבאמת קרה, על פני עונות-מבחן שהוא מעולם לא התאמן עליהן. כשהשניים מתיישרים, האחוזים אומרים מה שהם אומרים — וזה מה שמבדיל מנוע אמין מניחוש.`,
+    howto4Title:"תווית העייפות — 'עמדת-לוח רעה'",
+    howto4:`חלק מהכרטיסים נושאים תווית "עמדת-לוח רעה". היא מופיעה כשהפייבוריט משחק את המשחק השני שלו בלילות רצופים (back-to-back), והמשחק השני כרוך במעבר בין ערים — בין אם יציאה לדרכים ובין אם חזרה הביתה — בעוד שהמאאוטסיידר רענן. למה זה משנה: קבוצה עייפה שנסעה נוטה לשחק קצת פחות טוב, אז סיכוי ההפתעה עולה — מבסיס של בערך 36% לכיוון 46% במקרה החריף ביותר (הפייבוריט יוצא לדרכים). אמבר מסמן את העמדה החריפה הזו; תווית עמומה מסמנת את המתונה יותר (חזרה הביתה). זהו ממצא היסטורי מאומת — יציב ב-9 מתוך 12 העונות האחרונות — והוא יתחיל לסמן משחקים חיים כשהעונה החדשה תיפתח.`,
+    howto5Title:"הסייג",
+    howto5:`תווית העייפות היא דגל הטיה, לא נבואה. היא לא אומרת שהפייבוריט יפסיד — היא רק אומרת שסיכוי ההפתעה גבוה מהרגיל. הפייבוריט עדיין מנצח רוב הזמן. וכמו שאר המנוע, זה נבדק מול תוצאות היסטוריות והיגיון נאיבי, לא מול קווי מהמרים — זה יתרון בקריאת המשחק, לא הבטחה לכסף קל.`,
     noteH:"איך זה הופך לחי",
     noteBody:`כל המספרים אמיתיים ומדודים מתוך 15,428 משחקים — אבל היסטוריים. לניבויים חיים המנוע רץ אצלך: <code>python fetch_current_season.py</code> ואז <code>python run_daily.py</code>, שכותב את ניבויי היום ישר ללוח. כל תווית אחוז היא הדיוק האמיתי שנמדד לאותו שילוב של ביטחון × שלב; שילוב עם מדגם קטן מדי יציג «מדגם קטן» במקום מספר.`,
     freshOk:"עודכן לאחרונה: ", freshStale1:"⚠ העדכון האחרון נכשל — מוצגים נתונים מ-", freshUnknown:"לא ידוע",
@@ -216,6 +277,12 @@ const I18N = {
     vs:"נגד", pickLbl:"הניבוי: ", home:"· בית", road:"· חוץ, נגד הבית",
     conf:"% ביטחון", cellHist1:"שילוב זה היסטורית: ", cellSmall:"מדגם קטן",
     pend:"⏳ ממתין", correct:"✓ צדק", missed:"✗ החטיא",
+    fatLabelSevere:"⚠️ עמדת-לוח רעה: הפייבוריט ביציאה לדרכים (החריף ביותר)",
+    fatLabelNormal:"⚠️ עמדת-לוח רעה: הפייבוריט במשחק שני ברצף",
+    fatVsBase:"מול בסיס", fatNote:"סיכוי הפתעה מוגבר — דגל הטיה, לא נבואה.",
+    offseasonMsg:"🏀 מחוץ לעונה — אין משחקים כרגע. המנוע חוזר כשהעונה נפתחת (סביב סוף אוקטובר). הרשומה ההיסטורית למטה עומדת בעינה.",
+    scannedMsg:"נסרקו {n} משחקים היום · אף אחד לא עבר את סף הביטחון. המנוע בררן — זו המשמעת.",
+    noGamesMsg:"אין משחקי NBA מתוכננים היום. חזור ביום משחק.",
   },
 };
 const STAGE = {
@@ -256,6 +323,14 @@ function render(filter){
   currentFilter = filter;
   const grid=document.getElementById("grid");
   const rows=PICKS.filter(p=> filter==="all" || [6,8,9].includes(p.stage)).sort((a,b)=>b.prob-a.prob);
+  if(rows.length===0){
+    let msg;
+    if(typeof STATE!=="undefined" && STATE.offseason) msg = t("offseasonMsg");
+    else if(typeof STATE!=="undefined" && STATE.games>0) msg = t("scannedMsg").replace("{n}", STATE.games);
+    else msg = t("noGamesMsg");
+    grid.innerHTML = `<div class="empty-state">${msg}</div>`;
+    return;
+  }
   const vs=`<span style="color:var(--faint);font-size:14px">${t("vs")}</span>`;
   grid.innerHTML = rows.map(p=>{
     const homePick=p.pick===p.home;
@@ -265,6 +340,16 @@ function render(filter){
     const oc = p.ok===null ? `<span class="outcome pend">${t("pend")}</span>`
                            : `<span class="outcome ${p.ok?'ok':'no'}">${p.ok?t("correct"):t("missed")}</span>`;
     const sname = (STAGE[LANG]&&STAGE[LANG][p.stage]!==undefined)?STAGE[LANG][p.stage]:STAGE.en[p.stage];
+    let fatHtml = "";
+    if(p.fatigue){
+      const sev = p.fatigue.severity==="severe";
+      fatHtml = `<div style="margin-top:8px;padding:6px 9px;border-radius:6px;font-size:12px;line-height:1.4;`+
+        `border:1px solid ${sev?'rgba(240,160,32,.4)':'var(--line)'};`+
+        `background:${sev?'rgba(240,160,32,.08)':'rgba(255,255,255,.03)'};`+
+        `color:${sev?'#f0a020':'var(--mut)'}">`+
+        `${sev?t("fatLabelSevere"):t("fatLabelNormal")} · ~${p.fatigue.upset_pct}% ${t("fatVsBase")} ~${p.fatigue.base_pct}%`+
+        `<div style="color:var(--faint);font-size:11px;margin-top:2px">${t("fatNote")}</div></div>`;
+    }
     return `
     <div class="card">
       <div class="top"><span class="date">${p.date}</span>${oc}</div>
@@ -274,6 +359,7 @@ function render(filter){
         <div class="conf-top"><span class="v">${p.prob}<small>${t("conf")}</small></span></div>
         <div class="conf-bar"><i style="width:${p.prob}%;background:${col}"></i></div>
       </div>
+      ${fatHtml}
       <div class="foot">
         <span class="badge ${tr}"><span class="num">${p.stage}</span> ${sname}</span>
         <span class="cell">${cell}</span>
@@ -289,6 +375,11 @@ function applyLang(){
   document.querySelectorAll("[data-i18n-html]").forEach(el=>{ el.innerHTML = t(el.dataset.i18nHtml); });
   document.querySelectorAll(".lang button").forEach(b=> b.classList.toggle("on", b.dataset.lang===LANG));
   renderFresh(); renderCalib(); renderTrack(); render(currentFilter);
+}
+
+function openHowto(){
+  var d = document.getElementById("howto");
+  if(d){ d.open = true; d.scrollIntoView({behavior:"smooth", block:"start"}); }
 }
 
 document.querySelectorAll(".lang button").forEach(b=>{
