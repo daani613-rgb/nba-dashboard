@@ -63,6 +63,7 @@
   .kpi .n small{font-size:14px;color:var(--faint)}
   .kpi .l{font-size:11.5px;color:var(--muted);margin-top:2px}
   .kpi .b{font-size:10px;color:var(--faint);font-family:var(--mono);margin-top:2px}
+  .kpi .b:empty{display:none}
 
   .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
   .tr-grid{display:grid;grid-template-columns:1.1fr 1.6fr;gap:18px}
@@ -183,7 +184,7 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-11 00:30", "lastGood": "2026-06-11 00:30"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-11 00:54", "lastGood": "2026-06-11 00:54"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 62, "n": 1963}, {"band": "70–80%", "actual": 73, "n": 1393}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 86, "n": 249}];
 const PICKS = [{"date": "2026-06-11", "home": "NYK", "away": "SAS", "pick": "NYK", "road": false, "prob": 58, "home_prob": 0.581, "stage": 8, "name": "פריצת הדרך", "cellAcc": 69, "cellN": 543, "ok": null, "fatigue": null}];
@@ -197,11 +198,11 @@ const I18N = {
     h1:"Predictions Board",
     sub:"The engine predicts, the stage explains, calibration proves.",
     tag:"Historical · validated on 15,428 games",
-    kpi1l:"Right 85% when confident",   kpi1b:"vs 57% for always-guessing-home · tested on unseen games",
-    kpi2l:"Right 76% when betting against the home team", kpi2b:"vs 43% on average · stable across seasons",
-    kpi3l:"Right 85% on the strongest calls", kpi3b:"momentum stages (6/8/9) · vs 65% otherwise",
-    kpi4l:"15,428 real games",          kpi4b:"most numbers measured on these (2010–2024)",
-    kpi5l:"+10 points to upset chance when the favorite is tired", kpi5b:"from 36% to 46% (2nd game in a row, away)",
+    kpi1l:"When the engine is sure a team will win, it wins 85% of the time.", kpi1b:"",
+    kpi2l:"Even when it bets on the away team — against home advantage — it's right 76%.", kpi2b:"",
+    kpi3l:"When the team is at peak form, the prediction is right 85%.", kpi3b:"",
+    kpi4l:"Measured on 15,428 real games.", kpi4b:"",
+    kpi5l:"A tired favorite loses 46% of the time, vs 36% when rested.", kpi5b:"",
     perf:"Engine performance",
     trHead:"Confidence zone (\u226580%) · test seasons",
     trNote:"The live journal fills in here as games close.",
@@ -242,11 +243,11 @@ const I18N = {
     h1:"לוח הניבויים",
     sub:"המנוע מנבא, השלב מסביר, והכיול מוכיח.",
     tag:"היסטורי · מאומת על 15,428 משחקים",
-    kpi1l:"צודק ב-85% כשהוא בטוח", kpi1b:"לעומת 57% לניחוש 'תמיד הביתית' · נבדק על משחקים שלא ראה",
-    kpi2l:"צודק ב-76% כשהוא מהמר נגד הקבוצה הביתית", kpi2b:"לעומת 43% בממוצע · יציב על פני העונות",
-    kpi3l:"צודק ב-85% בקריאות הכי-חזקות", kpi3b:"שלבי המומנטום (6/8/9) · לעומת 65% ברגיל",
-    kpi4l:"15,428 משחקים אמיתיים", kpi4b:"רוב המספרים נמדדו עליהם (2010–2024)",
-    kpi5l:"+10 נקודות לסיכוי הפתעה כשהפייבוריט עייף", kpi5b:"מ-36% ל-46% (משחק שני ברצף, בחוץ)",
+    kpi1l:"כשהמנוע בטוח שקבוצה תנצח, היא מנצחת ב-85% מהפעמים.", kpi1b:"",
+    kpi2l:"גם כשהוא מהמר על האורחת — נגד יתרון הבית — הוא צודק ב-76%.", kpi2b:"",
+    kpi3l:"כשהקבוצה בשיא הכושר, הניבוי צודק ב-85%.", kpi3b:"",
+    kpi4l:"נמדד על 15,428 משחקים אמיתיים.", kpi4b:"",
+    kpi5l:"פייבוריט עייף מפסיד ב-46% מהמקרים, לעומת 36% כשהוא רענן.", kpi5b:"",
     perf:"ביצועי המנוע",
     trHead:"אזור הביטחון (\u226580%) · עונות מבחן",
     trNote:"היומן החי יתעדכן כאן ככל שמשחקים נסגרים.",
