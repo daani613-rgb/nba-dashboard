@@ -176,6 +176,7 @@
     <summary data-i18n="howAccTitle"></summary>
     <div class="howto-body">
       <h3 class="howto-h" data-i18n="howto1Title"></h3><p class="howto-p" data-i18n="howto1"></p>
+      <h3 class="howto-h" data-i18n="howtoKpiTitle"></h3><p class="howto-p" data-i18n="howtoKpi"></p>
       <h3 class="howto-h" data-i18n="howto2Title"></h3><p class="howto-p" data-i18n="howto2"></p>
       <h3 class="howto-h" data-i18n="howto3Title"></h3><p class="howto-p" data-i18n="howto3"></p>
       <h3 class="howto-h" data-i18n="howto4Title"></h3><p class="howto-p" data-i18n="howto4"></p>
@@ -190,7 +191,7 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-10 20:39", "lastGood": "2026-06-10 20:39"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-10 23:58", "lastGood": "2026-06-10 23:58"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 62, "n": 1963}, {"band": "70–80%", "actual": 73, "n": 1393}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 86, "n": 249}];
 const PICKS = [{"date": "2026-06-10", "home": "NYK", "away": "SAS", "pick": "NYK", "road": false, "prob": 58, "home_prob": 0.581, "stage": 8, "name": "פריצת הדרך", "cellAcc": 69, "cellN": 543, "ok": null, "fatigue": null}];
@@ -204,11 +205,11 @@ const I18N = {
     h1:"Predictions Board",
     sub:"The engine predicts, the stage explains, calibration proves.",
     tag:"Historical · validated on 15,428 games",
-    kpi1l:"Accuracy at \u226585% confidence", kpi1b:"base 57% · holdout",
-    kpi2l:"Against-home call \u226570%",      kpi2b:"base 43% · stable",
-    kpi3l:"High stage 6/8/9",                 kpi3b:"stable in holdout",
-    kpi4l:"Games trained on",                 kpi4b:"5 separate test seasons",
-    kpi5l:"Upset chance on a tired favorite (road b2b)", kpi5b:"base ~36% · stable 9/12 seasons",
+    kpi1l:"Right 85% when confident",   kpi1b:"vs 57% for always-guessing-home · tested on unseen games",
+    kpi2l:"Right 76% when betting against the home team", kpi2b:"vs 43% on average · stable across seasons",
+    kpi3l:"Right 85% on the strongest calls", kpi3b:"momentum stages (6/8/9) · vs 65% otherwise",
+    kpi4l:"15,428 real games",          kpi4b:"most numbers measured on these (2010–2024)",
+    kpi5l:"+10 points to upset chance when the favorite is tired", kpi5b:"from 36% to 46% (2nd game in a row, away)",
     perf:"Engine performance",
     trHead:"Confidence zone (\u226580%) · test seasons",
     trNote:"The live journal fills in here as games close.",
@@ -220,6 +221,8 @@ const I18N = {
     howAccTitle:"How to read this page",
     howto1Title:"What this page shows",
     howto1:`Every NBA game today appears here as a card, sorted by how confident the engine is — most confident on top. Each card shows the engine's pick and its win chance. The page shows all games, not just the strong ones; the confidence bar is what tells them apart.`,
+    howtoKpiTitle:"The headline numbers (top boxes)",
+    howtoKpi:`The five boxes at the top summarize how the engine did when tested on seasons it never trained on — fixed historical results, not today's games. One detail kept out of the boxes to keep them short: the "85% on the strongest calls vs 65% otherwise" comparison is measured only within confident calls (≥70%) — the fair, like-for-like comparison.`,
     howto2Title:"Confidence and A+",
     howto2:`The win chance is how likely the engine thinks the pick is to win — basketball has no draw, so it's just two outcomes: this team or the other. A pick at 80% means the engine expects it to win about 4 times out of 5. "A+" marks the highest-confidence calls (the engine's strongest zone). High confidence is not certainty — even an 80% pick loses about 1 time in 5.`,
     howto3Title:"Calibration",
@@ -246,11 +249,11 @@ const I18N = {
     h1:"לוח הניבויים",
     sub:"המנוע מנבא, השלב מסביר, והכיול מוכיח.",
     tag:"היסטורי · מאומת על 15,428 משחקים",
-    kpi1l:"דיוק בביטחון \u226585%", kpi1b:"בסיס 57% · הולד-אאוט",
-    kpi2l:"קריאה נגד הבית \u226570%", kpi2b:"בסיס 43% · יציב",
-    kpi3l:"שלב גבוה 6/8/9", kpi3b:"יציב בהולד-אאוט",
-    kpi4l:"משחקים באימון", kpi4b:"5 עונות מבחן נפרד",
-    kpi5l:"סיכוי הפתעה על פייבוריט עייף (b2b בדרכים)", kpi5b:"בסיס ~36% · יציב 9/12 עונות",
+    kpi1l:"צודק ב-85% כשהוא בטוח", kpi1b:"לעומת 57% לניחוש 'תמיד הביתית' · נבדק על משחקים שלא ראה",
+    kpi2l:"צודק ב-76% כשהוא מהמר נגד הקבוצה הביתית", kpi2b:"לעומת 43% בממוצע · יציב על פני העונות",
+    kpi3l:"צודק ב-85% בקריאות הכי-חזקות", kpi3b:"שלבי המומנטום (6/8/9) · לעומת 65% ברגיל",
+    kpi4l:"15,428 משחקים אמיתיים", kpi4b:"רוב המספרים נמדדו עליהם (2010–2024)",
+    kpi5l:"+10 נקודות לסיכוי הפתעה כשהפייבוריט עייף", kpi5b:"מ-36% ל-46% (משחק שני ברצף, בחוץ)",
     perf:"ביצועי המנוע",
     trHead:"אזור הביטחון (\u226580%) · עונות מבחן",
     trNote:"היומן החי יתעדכן כאן ככל שמשחקים נסגרים.",
@@ -262,6 +265,8 @@ const I18N = {
     howAccTitle:"איך לקרוא את הדף",
     howto1Title:"מה הדף מראה",
     howto1:`כל משחק NBA של היום מופיע כאן ככרטיס, ממוין לפי כמה המנוע בטוח — הבטוח ביותר למעלה. כל כרטיס מראה את הבחירה של המנוע ואת סיכוי הניצחון. הדף מציג את כל המשחקים, לא רק את החזקים; פס הביטחון הוא מה שמבדיל ביניהם.`,
+    howtoKpiTitle:"המספרים בראש הדף (הקוביות)",
+    howtoKpi:`חמש הקוביות בראש הדף מסכמות איך המנוע הצליח כשנבדק על עונות שלא התאמן עליהן — תוצאות היסטוריות קבועות, לא משחקי היום. פרט אחד שהושאר מחוץ לקוביות כדי לשמור עליהן קצרות: ההשוואה "85% בקריאות החזקות מול 65% ברגיל" נמדדת רק בתוך קריאות בטוחות (ביטחון ≥70%) — ההשוואה ההוגנת.`,
     howto2Title:"ביטחון ו-A+",
     howto2:`סיכוי הניצחון הוא כמה המנוע מעריך שהבחירה תנצח — בכדורסל אין תיקו, אז יש רק שתי תוצאות: הקבוצה הזו או השנייה. בחירה ב-80% אומרת שהמנוע מצפה שהיא תנצח בערך 4 פעמים מתוך 5. "A+" מסמן את הקריאות עם הביטחון הגבוה ביותר (האזור החזק של המנוע). ביטחון גבוה הוא לא ודאות — גם בחירה של 80% מפסידה בערך פעם אחת מכל 5.`,
     howto3Title:"כיול",
@@ -296,6 +301,8 @@ let LANG = "en";
 let currentFilter = "all";
 function t(k){ return (I18N[LANG] && I18N[LANG][k]!==undefined) ? I18N[LANG][k] : I18N.en[k]; }
 
+function fmtDate(s){ const p=String(s).split("-"); if(p.length!==3) return s;
+  return (LANG==="he") ? p[2]+"."+p[1] : p[1]+"."+p[2]; }   // he DD.MM · en MM.DD
 function tier(s){ if([6,8,9].includes(s)) return "high"; if([2,3,5,7].includes(s)) return "mid"; return "low"; }
 function tierColor(x){ return x==="high"?"var(--t-high)":x==="mid"?"var(--t-mid)":"var(--t-low)"; }
 
@@ -352,7 +359,7 @@ function render(filter){
     }
     return `
     <div class="card">
-      <div class="top"><span class="date">${p.date}</span>${oc}</div>
+      <div class="top"><span class="date">${fmtDate(p.date)}</span>${oc}</div>
       <div class="match">${match}</div>
       <div class="picked">${t("pickLbl")}<span class="team">${p.pick}</span> ${p.road?t("road"):t("home")}</div>
       <div class="conf-wrap">
