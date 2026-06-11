@@ -190,7 +190,7 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-10 12:53", "lastGood": "2026-06-10 12:53"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-10 20:39", "lastGood": "2026-06-10 20:39"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 62, "n": 1963}, {"band": "70–80%", "actual": 73, "n": 1393}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 86, "n": 249}];
 const PICKS = [{"date": "2026-06-10", "home": "NYK", "away": "SAS", "pick": "NYK", "road": false, "prob": 58, "home_prob": 0.581, "stage": 8, "name": "פריצת הדרך", "cellAcc": 69, "cellN": 543, "ok": null, "fatigue": null}];
@@ -233,7 +233,7 @@ const I18N = {
     freshOk:"Last updated: ", freshStale1:"⚠ Last update failed — showing data from ", freshUnknown:"unknown",
     actual:"actual ", trSub1:"Accuracy on ", trSub2:" unseen confident predictions",
     vs:"vs", pickLbl:"Pick: ", home:"· home", road:"· away, vs home",
-    conf:"% confidence", cellHist1:"this cell historically: ", cellSmall:"small sample",
+    conf:"% confidence", cellHist1:"Similar calls were right {acc}% of the time ({n} cases)", cellSmall:"Too few similar calls",
     pend:"⏳ pending", correct:"✓ correct", missed:"✗ missed",
     fatLabelSevere:"⚠️ Bad schedule spot: favorite on a road back-to-back (sharpest)",
     fatLabelNormal:"⚠️ Bad schedule spot: favorite on a back-to-back",
@@ -275,7 +275,7 @@ const I18N = {
     freshOk:"עודכן לאחרונה: ", freshStale1:"⚠ העדכון האחרון נכשל — מוצגים נתונים מ-", freshUnknown:"לא ידוע",
     actual:"בפועל ", trSub1:"דיוק על ", trSub2:" ניבויים בטוחים שלא נראו",
     vs:"נגד", pickLbl:"הניבוי: ", home:"· בית", road:"· חוץ, נגד הבית",
-    conf:"% ביטחון", cellHist1:"שילוב זה היסטורית: ", cellSmall:"מדגם קטן",
+    conf:"% ביטחון", cellHist1:"תחזיות דומות צדקו ב-{acc}% ({n} מקרים)", cellSmall:"מעט תחזיות דומות",
     pend:"⏳ ממתין", correct:"✓ צדק", missed:"✗ החטיא",
     fatLabelSevere:"⚠️ עמדת-לוח רעה: הפייבוריט ביציאה לדרכים (החריף ביותר)",
     fatLabelNormal:"⚠️ עמדת-לוח רעה: הפייבוריט במשחק שני ברצף",
@@ -336,7 +336,7 @@ function render(filter){
     const homePick=p.pick===p.home;
     const match = homePick ? `<b>${p.home}</b> ${vs} ${p.away}` : `${p.home} ${vs} <b>${p.away}</b>`;
     const tr=tier(p.stage), col=tierColor(tr);
-    const cell = p.cellN>=30 ? `${t("cellHist1")}<b>${p.cellAcc}%</b> (n=${p.cellN})` : t("cellSmall");
+    const cell = p.cellN>=30 ? t("cellHist1").replace("{acc}", `<b>${p.cellAcc}</b>`).replace("{n}", p.cellN) : t("cellSmall");
     const oc = p.ok===null ? `<span class="outcome pend">${t("pend")}</span>`
                            : `<span class="outcome ${p.ok?'ok':'no'}">${p.ok?t("correct"):t("missed")}</span>`;
     const sname = (STAGE[LANG]&&STAGE[LANG][p.stage]!==undefined)?STAGE[LANG][p.stage]:STAGE.en[p.stage];
