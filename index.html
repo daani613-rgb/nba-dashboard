@@ -191,7 +191,7 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-12 00:29", "lastGood": "2026-06-12 00:29"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-12 02:44", "lastGood": "2026-06-12 02:44"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 62, "n": 1963}, {"band": "70–80%", "actual": 73, "n": 1393}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 86, "n": 249}];
 const PICKS = [];
@@ -219,7 +219,7 @@ const I18N = {
     calibLive:"These numbers include the current season and update as it plays",
     recent:"Recent predictions",
     fAll:"All", fHigh:"High stage only",
-    decidedHead:"Decided this season", marginLbl:"margin",
+    decidedHead:"Decided this season", marginLbl:"margin", predictedLbl:"predicted",
     howtoDecidedTitle:"Decided this season",
     howtoDecided:"Every game we called that has finished stays here for the whole season — the matchup with the winner in bold, our pick (✓ if we got it right), the final score, and the margin. The record builds as the season plays and doesn't reset until next season.",
     howtoHint:"New here? How to read this page →",
@@ -267,7 +267,7 @@ const I18N = {
     calibLive:"המספרים כוללים את העונה הנוכחית ומתעדכנים ככל שהיא מתקדמת",
     recent:"ניבויים אחרונים",
     fAll:"הכל", fHigh:"רק שלב גבוה",
-    decidedHead:"הוכרעו העונה", marginLbl:"הפרש",
+    decidedHead:"הוכרעו העונה", marginLbl:"הפרש", predictedLbl:"ניבאנו",
     howtoDecidedTitle:"הוכרעו העונה",
     howtoDecided:"כל משחק שקראנו ושהסתיים נשאר כאן לכל אורך העונה — המפגש עם המנצח מודגש, הניבוי שלנו (✓ אם צדקנו), הסקור הסופי, וההפרש. הרשומה נבנית ככל שהעונה מתקדמת ולא מתאפסת עד העונה הבאה.",
     howtoHint:"חדש כאן? איך לקרוא את הדף ←",
@@ -392,7 +392,7 @@ function renderDecided(){
     return `<div class="card">
       <div class="top"><span class="date">${fmtDate(d.date)}</span>${oc}</div>
       <div class="match">${match}</div>
-      <div class="picked">${t("pickLbl")}<span class="team">${d.pick}</span></div>
+      <div class="picked">${t("pickLbl")}<span class="team">${d.pick}</span> · ${t("predictedLbl")} ${d.prob}%</div>
       <div class="score-line"><span class="sc">${winner} ${wpts}–${lpts}</span><span class="mg">${t("marginLbl")} ${margin}</span></div>
     </div>`;
   }).join("");
