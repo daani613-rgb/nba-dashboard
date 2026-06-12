@@ -96,6 +96,9 @@
   .match b{font-weight:900}
   .picked{font-size:11.5px;color:var(--muted)}
   .picked .team{color:var(--ink);font-weight:700}
+  .score-line{display:flex;align-items:baseline;gap:10px;margin-top:10px;font-family:var(--mono);font-size:12.5px}
+  .score-line .sc{color:var(--ink);font-weight:700}
+  .score-line .mg{color:var(--faint);font-size:11px}
   .conf-wrap{margin:12px 0 4px}
   .conf-top{display:flex;align-items:baseline;justify-content:space-between}
   .conf-top .v{font-family:var(--serif);font-weight:900;font-size:23px}
@@ -165,6 +168,9 @@
   </div>
   <div class="grid" id="grid" role="status"></div>
 
+  <div class="section-h" id="decidedSection"><h2 data-i18n="decidedHead"></h2></div>
+  <div class="grid" id="decided" role="status"></div>
+
   <details id="howto">
     <summary data-i18n="howAccTitle"></summary>
     <div class="howto-body">
@@ -173,6 +179,7 @@
       <h3 class="howto-h" data-i18n="howto2Title"></h3><p class="howto-p" data-i18n="howto2"></p>
       <h3 class="howto-h" data-i18n="howto3Title"></h3><p class="howto-p" data-i18n="howto3"></p>
       <h3 class="howto-h" data-i18n="howto4Title"></h3><p class="howto-p" data-i18n="howto4"></p>
+      <h3 class="howto-h" data-i18n="howtoDecidedTitle"></h3><p class="howto-p" data-i18n="howtoDecided"></p>
       <h3 class="howto-h howto-warn" data-i18n="howto5Title"></h3><p class="howto-note" data-i18n="howto5"></p>
     </div>
   </details>
@@ -184,12 +191,13 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-11 23:42", "lastGood": "2026-06-11 23:42"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-12 00:29", "lastGood": "2026-06-12 00:29"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 62, "n": 1963}, {"band": "70–80%", "actual": 73, "n": 1393}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 86, "n": 249}];
 const PICKS = [];
 const TRACK = {"acc": 81, "n": 623};
 const STATE = {"games": 0, "picks": 0, "offseason": false};
+const DECIDED = [{"date": "2026-06-10", "home": "NYK", "away": "SAS", "hp": 107, "ap": 106, "pick": "NYK", "prob": 58, "correct": true}, {"date": "2026-06-08", "home": "NYK", "away": "SAS", "hp": 111, "ap": 115, "pick": "NYK", "prob": 62, "correct": false}, {"date": "2026-06-05", "home": "SAS", "away": "NYK", "hp": 104, "ap": 105, "pick": "SAS", "prob": 60, "correct": false}, {"date": "2026-06-03", "home": "SAS", "away": "NYK", "hp": 95, "ap": 105, "pick": "SAS", "prob": 64, "correct": false}, {"date": "2026-05-30", "home": "OKC", "away": "SAS", "hp": 103, "ap": 111, "pick": "OKC", "prob": 64, "correct": false}, {"date": "2026-05-28", "home": "SAS", "away": "OKC", "hp": 118, "ap": 91, "pick": "SAS", "prob": 51, "correct": true}, {"date": "2026-05-26", "home": "OKC", "away": "SAS", "hp": 127, "ap": 114, "pick": "OKC", "prob": 65, "correct": true}, {"date": "2026-05-25", "home": "CLE", "away": "NYK", "hp": 93, "ap": 130, "pick": "NYK", "prob": 54, "correct": true}, {"date": "2026-05-24", "home": "SAS", "away": "OKC", "hp": 103, "ap": 82, "pick": "SAS", "prob": 50, "correct": true}, {"date": "2026-05-23", "home": "CLE", "away": "NYK", "hp": 108, "ap": 121, "pick": "NYK", "prob": 51, "correct": true}, {"date": "2026-05-22", "home": "SAS", "away": "OKC", "hp": 108, "ap": 123, "pick": "SAS", "prob": 53, "correct": false}, {"date": "2026-05-21", "home": "NYK", "away": "CLE", "hp": 109, "ap": 93, "pick": "NYK", "prob": 67, "correct": true}, {"date": "2026-05-20", "home": "OKC", "away": "SAS", "hp": 122, "ap": 113, "pick": "OKC", "prob": 63, "correct": true}, {"date": "2026-05-19", "home": "NYK", "away": "CLE", "hp": 115, "ap": 104, "pick": "NYK", "prob": 65, "correct": true}, {"date": "2026-05-18", "home": "OKC", "away": "SAS", "hp": 115, "ap": 122, "pick": "OKC", "prob": 66, "correct": false}, {"date": "2026-05-17", "home": "DET", "away": "CLE", "hp": 94, "ap": 125, "pick": "DET", "prob": 62, "correct": false}, {"date": "2026-05-15", "home": "MIN", "away": "SAS", "hp": 109, "ap": 139, "pick": "SAS", "prob": 54, "correct": true}, {"date": "2026-05-15", "home": "CLE", "away": "DET", "hp": 94, "ap": 115, "pick": "CLE", "prob": 60, "correct": false}, {"date": "2026-05-13", "home": "DET", "away": "CLE", "hp": 113, "ap": 117, "pick": "DET", "prob": 62, "correct": false}, {"date": "2026-05-12", "home": "SAS", "away": "MIN", "hp": 126, "ap": 97, "pick": "SAS", "prob": 70, "correct": true}, {"date": "2026-05-11", "home": "LAL", "away": "OKC", "hp": 110, "ap": 115, "pick": "OKC", "prob": 61, "correct": true}, {"date": "2026-05-11", "home": "CLE", "away": "DET", "hp": 112, "ap": 103, "pick": "CLE", "prob": 54, "correct": true}, {"date": "2026-05-10", "home": "PHI", "away": "NYK", "hp": 114, "ap": 144, "pick": "NYK", "prob": 55, "correct": true}, {"date": "2026-05-10", "home": "MIN", "away": "SAS", "hp": 114, "ap": 109, "pick": "SAS", "prob": 56, "correct": false}, {"date": "2026-05-09", "home": "LAL", "away": "OKC", "hp": 108, "ap": 131, "pick": "OKC", "prob": 58, "correct": true}, {"date": "2026-05-09", "home": "CLE", "away": "DET", "hp": 116, "ap": 109, "pick": "CLE", "prob": 51, "correct": true}, {"date": "2026-05-08", "home": "MIN", "away": "SAS", "hp": 108, "ap": 115, "pick": "SAS", "prob": 53, "correct": true}, {"date": "2026-05-08", "home": "PHI", "away": "NYK", "hp": 94, "ap": 108, "pick": "NYK", "prob": 52, "correct": true}, {"date": "2026-05-07", "home": "OKC", "away": "LAL", "hp": 125, "ap": 107, "pick": "OKC", "prob": 74, "correct": true}, {"date": "2026-05-07", "home": "DET", "away": "CLE", "hp": 107, "ap": 97, "pick": "DET", "prob": 66, "correct": true}, {"date": "2026-05-06", "home": "SAS", "away": "MIN", "hp": 133, "ap": 95, "pick": "SAS", "prob": 69, "correct": true}, {"date": "2026-05-06", "home": "NYK", "away": "PHI", "hp": 108, "ap": 102, "pick": "NYK", "prob": 68, "correct": true}, {"date": "2026-05-05", "home": "DET", "away": "CLE", "hp": 111, "ap": 101, "pick": "DET", "prob": 64, "correct": true}, {"date": "2026-05-05", "home": "OKC", "away": "LAL", "hp": 108, "ap": 90, "pick": "OKC", "prob": 72, "correct": true}, {"date": "2026-05-04", "home": "SAS", "away": "MIN", "hp": 102, "ap": 104, "pick": "SAS", "prob": 72, "correct": false}, {"date": "2026-05-04", "home": "NYK", "away": "PHI", "hp": 137, "ap": 98, "pick": "NYK", "prob": 66, "correct": true}, {"date": "2026-05-03", "home": "CLE", "away": "TOR", "hp": 114, "ap": 102, "pick": "CLE", "prob": 68, "correct": true}, {"date": "2026-05-03", "home": "DET", "away": "ORL", "hp": 116, "ap": 94, "pick": "DET", "prob": 69, "correct": true}, {"date": "2026-05-02", "home": "BOS", "away": "PHI", "hp": 100, "ap": 109, "pick": "BOS", "prob": 71, "correct": false}, {"date": "2026-05-01", "home": "TOR", "away": "CLE", "hp": 112, "ap": 110, "pick": "CLE", "prob": 53, "correct": false}, {"date": "2026-05-01", "home": "HOU", "away": "LAL", "hp": 78, "ap": 98, "pick": "HOU", "prob": 55, "correct": false}, {"date": "2026-05-01", "home": "ORL", "away": "DET", "hp": 79, "ap": 93, "pick": "ORL", "prob": 52, "correct": false}, {"date": "2026-04-30", "home": "PHI", "away": "BOS", "hp": 106, "ap": 93, "pick": "BOS", "prob": 57, "correct": false}, {"date": "2026-04-30", "home": "MIN", "away": "DEN", "hp": 110, "ap": 98, "pick": "MIN", "prob": 54, "correct": true}, {"date": "2026-04-30", "home": "ATL", "away": "NYK", "hp": 89, "ap": 140, "pick": "ATL", "prob": 51, "correct": false}, {"date": "2026-04-29", "home": "DET", "away": "ORL", "hp": 116, "ap": 109, "pick": "DET", "prob": 64, "correct": true}, {"date": "2026-04-29", "home": "CLE", "away": "TOR", "hp": 125, "ap": 120, "pick": "CLE", "prob": 69, "correct": true}, {"date": "2026-04-29", "home": "LAL", "away": "HOU", "hp": 93, "ap": 99, "pick": "LAL", "prob": 67, "correct": false}, {"date": "2026-04-28", "home": "NYK", "away": "ATL", "hp": 126, "ap": 97, "pick": "NYK", "prob": 65, "correct": true}, {"date": "2026-04-28", "home": "SAS", "away": "POR", "hp": 114, "ap": 95, "pick": "SAS", "prob": 80, "correct": true}, {"date": "2026-04-28", "home": "BOS", "away": "PHI", "hp": 97, "ap": 113, "pick": "BOS", "prob": 77, "correct": false}, {"date": "2026-04-27", "home": "PHX", "away": "OKC", "hp": 122, "ap": 131, "pick": "OKC", "prob": 71, "correct": true}, {"date": "2026-04-27", "home": "DEN", "away": "MIN", "hp": 125, "ap": 113, "pick": "DEN", "prob": 62, "correct": true}, {"date": "2026-04-27", "home": "ORL", "away": "DET", "hp": 94, "ap": 88, "pick": "ORL", "prob": 51, "correct": true}, {"date": "2026-04-26", "home": "TOR", "away": "CLE", "hp": 93, "ap": 89, "pick": "CLE", "prob": 54, "correct": false}, {"date": "2026-04-26", "home": "POR", "away": "SAS", "hp": 93, "ap": 114, "pick": "SAS", "prob": 64, "correct": true}, {"date": "2026-04-26", "home": "HOU", "away": "LAL", "hp": 115, "ap": 96, "pick": "LAL", "prob": 52, "correct": false}, {"date": "2026-04-26", "home": "PHI", "away": "BOS", "hp": 96, "ap": 128, "pick": "BOS", "prob": 59, "correct": true}, {"date": "2026-04-25", "home": "ATL", "away": "NYK", "hp": 98, "ap": 114, "pick": "ATL", "prob": 56, "correct": false}, {"date": "2026-04-25", "home": "MIN", "away": "DEN", "hp": 112, "ap": 96, "pick": "MIN", "prob": 53, "correct": true}, {"date": "2026-04-25", "home": "ORL", "away": "DET", "hp": 113, "ap": 105, "pick": "DET", "prob": 52, "correct": false}, {"date": "2026-04-25", "home": "PHX", "away": "OKC", "hp": 109, "ap": 121, "pick": "OKC", "prob": 69, "correct": true}, {"date": "2026-04-24", "home": "PHI", "away": "BOS", "hp": 100, "ap": 108, "pick": "BOS", "prob": 56, "correct": true}, {"date": "2026-04-24", "home": "HOU", "away": "LAL", "hp": 108, "ap": 112, "pick": "HOU", "prob": 51, "correct": false}, {"date": "2026-04-24", "home": "POR", "away": "SAS", "hp": 108, "ap": 120, "pick": "SAS", "prob": 62, "correct": true}, {"date": "2026-04-23", "home": "MIN", "away": "DEN", "hp": 113, "ap": 96, "pick": "MIN", "prob": 50, "correct": true}, {"date": "2026-04-23", "home": "ATL", "away": "NYK", "hp": 109, "ap": 108, "pick": "ATL", "prob": 53, "correct": true}, {"date": "2026-04-23", "home": "TOR", "away": "CLE", "hp": 126, "ap": 104, "pick": "CLE", "prob": 57, "correct": false}, {"date": "2026-04-22", "home": "DET", "away": "ORL", "hp": 98, "ap": 83, "pick": "DET", "prob": 68, "correct": true}, {"date": "2026-04-22", "home": "OKC", "away": "PHX", "hp": 120, "ap": 107, "pick": "OKC", "prob": 82, "correct": true}, {"date": "2026-04-21", "home": "SAS", "away": "POR", "hp": 103, "ap": 106, "pick": "SAS", "prob": 81, "correct": false}, {"date": "2026-04-21", "home": "LAL", "away": "HOU", "hp": 101, "ap": 94, "pick": "LAL", "prob": 66, "correct": true}, {"date": "2026-04-21", "home": "BOS", "away": "PHI", "hp": 97, "ap": 111, "pick": "BOS", "prob": 76, "correct": false}, {"date": "2026-04-20", "home": "CLE", "away": "TOR", "hp": 115, "ap": 105, "pick": "CLE", "prob": 73, "correct": true}, {"date": "2026-04-20", "home": "DEN", "away": "MIN", "hp": 114, "ap": 119, "pick": "DEN", "prob": 71, "correct": false}, {"date": "2026-04-20", "home": "NYK", "away": "ATL", "hp": 106, "ap": 107, "pick": "NYK", "prob": 68, "correct": false}, {"date": "2026-04-19", "home": "SAS", "away": "POR", "hp": 111, "ap": 98, "pick": "SAS", "prob": 80, "correct": true}, {"date": "2026-04-19", "home": "BOS", "away": "PHI", "hp": 123, "ap": 91, "pick": "BOS", "prob": 75, "correct": true}, {"date": "2026-04-19", "home": "DET", "away": "ORL", "hp": 101, "ap": 112, "pick": "DET", "prob": 71, "correct": false}, {"date": "2026-04-19", "home": "OKC", "away": "PHX", "hp": 119, "ap": 84, "pick": "OKC", "prob": 81, "correct": true}, {"date": "2026-04-18", "home": "LAL", "away": "HOU", "hp": 107, "ap": 98, "pick": "LAL", "prob": 64, "correct": true}, {"date": "2026-04-18", "home": "DEN", "away": "MIN", "hp": 116, "ap": 105, "pick": "DEN", "prob": 70, "correct": true}, {"date": "2026-04-18", "home": "CLE", "away": "TOR", "hp": 126, "ap": 113, "pick": "CLE", "prob": 71, "correct": true}, {"date": "2026-04-18", "home": "NYK", "away": "ATL", "hp": 113, "ap": 102, "pick": "NYK", "prob": 67, "correct": true}, {"date": "2026-04-17", "home": "PHX", "away": "GSW", "hp": 111, "ap": 96, "pick": "PHX", "prob": 69, "correct": true}, {"date": "2026-04-17", "home": "ORL", "away": "CHA", "hp": 121, "ap": 90, "pick": "ORL", "prob": 53, "correct": true}, {"date": "2026-04-15", "home": "PHI", "away": "ORL", "hp": 109, "ap": 97, "pick": "PHI", "prob": 59, "correct": true}, {"date": "2026-04-15", "home": "LAC", "away": "GSW", "hp": 121, "ap": 126, "pick": "LAC", "prob": 73, "correct": false}, {"date": "2026-04-14", "home": "CHA", "away": "MIA", "hp": 127, "ap": 126, "pick": "CHA", "prob": 67, "correct": true}, {"date": "2026-04-14", "home": "PHX", "away": "POR", "hp": 110, "ap": 114, "pick": "PHX", "prob": 62, "correct": false}];
 // ===DATA_END===
 
 // ---- i18n ----
@@ -211,6 +219,9 @@ const I18N = {
     calibLive:"These numbers include the current season and update as it plays",
     recent:"Recent predictions",
     fAll:"All", fHigh:"High stage only",
+    decidedHead:"Decided this season", marginLbl:"margin",
+    howtoDecidedTitle:"Decided this season",
+    howtoDecided:"Every game we called that has finished stays here for the whole season — the matchup with the winner in bold, our pick (✓ if we got it right), the final score, and the margin. The record builds as the season plays and doesn't reset until next season.",
     howtoHint:"New here? How to read this page →",
     howAccTitle:"How to read this page",
     howto1Title:"What this page shows",
@@ -256,6 +267,9 @@ const I18N = {
     calibLive:"המספרים כוללים את העונה הנוכחית ומתעדכנים ככל שהיא מתקדמת",
     recent:"ניבויים אחרונים",
     fAll:"הכל", fHigh:"רק שלב גבוה",
+    decidedHead:"הוכרעו העונה", marginLbl:"הפרש",
+    howtoDecidedTitle:"הוכרעו העונה",
+    howtoDecided:"כל משחק שקראנו ושהסתיים נשאר כאן לכל אורך העונה — המפגש עם המנצח מודגש, הניבוי שלנו (✓ אם צדקנו), הסקור הסופי, וההפרש. הרשומה נבנית ככל שהעונה מתקדמת ולא מתאפסת עד העונה הבאה.",
     howtoHint:"חדש כאן? איך לקרוא את הדף ←",
     howAccTitle:"איך לקרוא את הדף",
     howto1Title:"מה הדף מראה",
@@ -365,13 +379,32 @@ function render(filter){
   }).join("");
 }
 
+function renderDecided(){
+  const box=document.getElementById("decided");
+  if(!DECIDED.length){ document.getElementById("decidedSection").style.display="none"; box.innerHTML=""; return; }
+  document.getElementById("decidedSection").style.display="";
+  const vs=`<span style="color:var(--faint);font-size:14px">${t("vs")}</span>`;
+  box.innerHTML = DECIDED.map(d=>{
+    const homeWon=d.hp>d.ap, winner=homeWon?d.home:d.away;
+    const wpts=Math.max(d.hp,d.ap), lpts=Math.min(d.hp,d.ap), margin=wpts-lpts;
+    const match=homeWon?`<b>${d.home}</b> ${vs} ${d.away}`:`${d.home} ${vs} <b>${d.away}</b>`;
+    const oc=d.correct?`<span class="outcome ok">${t("correct")}</span>`:`<span class="outcome no">${t("missed")}</span>`;
+    return `<div class="card">
+      <div class="top"><span class="date">${fmtDate(d.date)}</span>${oc}</div>
+      <div class="match">${match}</div>
+      <div class="picked">${t("pickLbl")}<span class="team">${d.pick}</span></div>
+      <div class="score-line"><span class="sc">${winner} ${wpts}–${lpts}</span><span class="mg">${t("marginLbl")} ${margin}</span></div>
+    </div>`;
+  }).join("");
+}
+
 function applyLang(){
   document.documentElement.lang = LANG;
   document.documentElement.dir = (LANG==="he") ? "rtl" : "ltr";
   document.querySelectorAll("[data-i18n]").forEach(el=>{ el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll("[data-i18n-html]").forEach(el=>{ el.innerHTML = t(el.dataset.i18nHtml); });
   document.querySelectorAll(".lang button").forEach(b=> b.classList.toggle("on", b.dataset.lang===LANG));
-  renderFresh(); renderCalib(); renderTrack(); render(currentFilter);
+  renderFresh(); renderCalib(); renderTrack(); render(currentFilter); renderDecided();
 }
 
 function openHowto(){
