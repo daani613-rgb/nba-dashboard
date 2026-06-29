@@ -123,6 +123,64 @@
   .empty-state{grid-column:1/-1;background:var(--panel);border:1px solid var(--line);
     border-radius:14px;padding:28px 24px;text-align:center;color:var(--muted);
     font-size:15px;line-height:1.6}
+
+  /* ===== שדרוג: קוביות-דירוג, בר-טוטאל, דגל-הפתעה, מודלים, footer, back-to-top ===== */
+  .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 16px}
+  .ctl{background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-size:12.5px;
+    padding:7px 13px;border-radius:8px;cursor:pointer;font-family:inherit}
+  .ctl:hover{border-color:var(--muted)}
+  #ranks{display:none;margin:6px 0 4px}
+  .cube{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-bottom:10px;overflow:hidden}
+  .cube summary{padding:12px 15px;cursor:pointer;font-weight:600;font-size:14px;list-style:none;
+    display:flex;justify-content:space-between;align-items:center}
+  .cube summary::-webkit-details-marker{display:none}
+  .cube summary .car{color:var(--faint);font-size:18px;transition:transform .2s}
+  .cube[open] summary .car{transform:rotate(90deg)}
+  .cube .cbody{padding:0 15px 12px}
+  .chelp{font-size:11.5px;color:var(--muted);padding:9px 0 2px;line-height:1.5}
+  .trow{font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.6px;
+    padding:9px 0 3px;border-top:1px solid var(--line);font-weight:700;margin-top:4px}
+  .tier{display:flex;align-items:center;gap:9px;padding:7px 0;border-top:1px solid var(--line);font-size:13px}
+  .trow + .tier{border-top:none}
+  .tdot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+  .t1{background:var(--green)}.t2{background:#46c9bb}.t3{background:var(--amber)}.t4{background:#e0894e}.t5{background:var(--red)}
+  .tname{flex:1}.tval{color:var(--muted);font-size:12px;font-family:var(--mono)}
+  .tlabel{font-size:10.5px;color:var(--faint);min-width:70px;text-align:end}
+  /* בר מנוע/שוק/טוטאל */
+  .barlbl{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin:10px 0 4px}
+  .bar2{height:24px;border-radius:7px;overflow:hidden;display:flex;font-size:12px;font-weight:700}
+  .bar2 .seg{display:flex;align-items:center;justify-content:center;color:#0f1115;white-space:nowrap}
+  .bar2.eng .seg:first-child{background:var(--blue)} .bar2.eng .seg:last-child{background:var(--panel2);color:var(--muted)}
+  .bar2.tot .seg:first-child{background:var(--green);color:#eafff6} .bar2.tot .seg:last-child{background:var(--panel2);color:var(--muted)}
+  .gapline{font-size:11.5px;margin-top:8px;padding:6px 9px;border-radius:7px;display:flex;justify-content:space-between;align-items:center}
+  .gapline.green{background:var(--green-d);color:var(--green);border:1px solid rgba(70,192,138,.3)}
+  .gapline.teal{background:rgba(31,156,143,.12);color:#46c9bb;border:1px solid rgba(31,156,143,.3)}
+  .gapline.gray{background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+  .flag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--amber);
+    background:rgba(240,180,41,.10);border:1px solid rgba(240,180,41,.32);padding:4px 9px;border-radius:6px;margin-top:9px}
+  .honest{font-size:10.5px;color:var(--faint);margin-top:7px;font-style:italic;line-height:1.4}
+  /* modals */
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;padding:20px;overflow-y:auto}
+  .modal.open{display:flex;align-items:flex-start;justify-content:center}
+  .modal .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:560px;width:100%;
+    padding:22px;margin:auto;position:relative}
+  .modal .x{position:absolute;top:12px;inset-inline-end:14px;background:none;border:none;color:var(--muted);
+    font-size:26px;cursor:pointer;line-height:1}
+  .modal h3{font-family:var(--serif);font-size:19px;margin-bottom:14px}
+  .modal h4{font-size:14px;margin:16px 0 5px;color:var(--blue);font-family:var(--serif)}
+  .modal p{font-size:13px;color:#cdd6e0;margin-bottom:8px;line-height:1.6}
+  .modal .num{color:var(--faint);font-weight:700;margin-inline-end:6px;font-family:var(--mono)}
+  .modal a{color:var(--blue)}
+  .demo{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin:8px 0;font-size:12.5px;color:var(--muted)}
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--faint);
+    text-align:center;line-height:1.8}
+  footer .age{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:5px;
+    padding:1px 7px;margin-inline-end:6px;font-weight:700;color:var(--muted)}
+  footer button{background:none;border:none;color:var(--blue);cursor:pointer;font-size:11.5px;text-decoration:underline;font-family:inherit}
+  #toTop{position:fixed;inset-block-end:18px;inset-inline-end:18px;z-index:50;background:var(--panel2);
+    border:1px solid var(--line);color:var(--ink);width:42px;height:42px;border-radius:50%;cursor:pointer;
+    font-size:18px;display:none;align-items:center;justify-content:center}
+  #toTop.show{display:flex}
 </style>
 </head>
 <body>
@@ -143,6 +201,13 @@
   </header>
 
   <div id="freshness" class="fresh"></div>
+
+  <div class="controls">
+    <button class="ctl" id="ranksBtn" aria-expanded="false" aria-controls="ranks" data-i18n="ranksBtn"></button>
+    <button class="ctl" id="guideBtn" data-i18n="guideBtn"></button>
+    <button class="ctl" id="discBtn" data-i18n="discBtn"></button>
+  </div>
+  <div id="ranks"></div>
 
   <div class="strip">
     <div class="kpi"><div class="n">85<small>%</small></div><div class="l" data-i18n="kpi1l"></div><div class="b" data-i18n="kpi1b"></div></div>
@@ -191,10 +256,45 @@
     <h3 data-i18n="noteH"></h3>
     <span data-i18n-html="noteBody"></span>
   </div>
+
+  <footer>
+    <p><span class="age">18+</span> <span data-i18n="discFooter"></span>
+      <button id="discBtn2" data-i18n="discLink"></button></p>
+  </footer>
+</div>
+
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<!-- GUIDE MODAL -->
+<div class="modal" id="guideModal" role="dialog" aria-modal="true" aria-label="How to read this page">
+  <div class="box">
+    <button class="x" data-close aria-label="Close">&times;</button>
+    <h3 data-i18n="gT"></h3>
+    <p><span class="num">1</span><span data-i18n="g1"></span></p>
+    <p><span class="num">2</span><span data-i18n="g2"></span></p>
+    <div class="demo" data-i18n="gDemo"></div>
+    <p><span class="num">3</span><span data-i18n="g3"></span></p>
+    <p><span class="num">4</span><span data-i18n="g4"></span></p>
+    <p><span class="num">5</span><span data-i18n="g5"></span></p>
+    <p><span class="num">6</span><span data-i18n="g6"></span></p>
+    <p><span class="num">7</span><span data-i18n="g7"></span></p>
+  </div>
+</div>
+
+<!-- DISCLAIMER MODAL -->
+<div class="modal" id="discModal" role="dialog" aria-modal="true" aria-label="Disclaimer and privacy">
+  <div class="box">
+    <button class="x" data-close aria-label="Close">&times;</button>
+    <h3 data-i18n="dT"></h3>
+    <h4 data-i18n="dDiscH"></h4>
+    <p data-i18n-html="dDisc"></p>
+    <h4 data-i18n="dPrivH"></h4>
+    <p data-i18n-html="dPriv"></p>
+  </div>
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-29 13:16", "lastGood": "2026-06-29 13:16"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-29 16:30", "lastGood": "2026-06-29 16:30"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 62, "n": 1963}, {"band": "70–80%", "actual": 73, "n": 1393}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 86, "n": 249}];
 const PICKS = [];
@@ -202,6 +302,7 @@ const TRACK = {"acc": 81, "n": 623};
 const STATE = {"games": 0, "picks": 0, "offseason": true};
 const DECIDED = [{"date": "2026-06-13", "home": "SAS", "away": "NYK", "hp": 90, "ap": 94, "pick": "SAS", "prob": 58, "correct": false}, {"date": "2026-06-10", "home": "NYK", "away": "SAS", "hp": 107, "ap": 106, "pick": "NYK", "prob": 58, "correct": true}, {"date": "2026-06-08", "home": "NYK", "away": "SAS", "hp": 111, "ap": 115, "pick": "NYK", "prob": 62, "correct": false}, {"date": "2026-06-05", "home": "SAS", "away": "NYK", "hp": 104, "ap": 105, "pick": "SAS", "prob": 60, "correct": false}, {"date": "2026-06-03", "home": "SAS", "away": "NYK", "hp": 95, "ap": 105, "pick": "SAS", "prob": 64, "correct": false}, {"date": "2026-05-30", "home": "OKC", "away": "SAS", "hp": 103, "ap": 111, "pick": "OKC", "prob": 64, "correct": false}, {"date": "2026-05-28", "home": "SAS", "away": "OKC", "hp": 118, "ap": 91, "pick": "SAS", "prob": 51, "correct": true}, {"date": "2026-05-26", "home": "OKC", "away": "SAS", "hp": 127, "ap": 114, "pick": "OKC", "prob": 65, "correct": true}, {"date": "2026-05-25", "home": "CLE", "away": "NYK", "hp": 93, "ap": 130, "pick": "NYK", "prob": 54, "correct": true}, {"date": "2026-05-24", "home": "SAS", "away": "OKC", "hp": 103, "ap": 82, "pick": "SAS", "prob": 50, "correct": true}, {"date": "2026-05-23", "home": "CLE", "away": "NYK", "hp": 108, "ap": 121, "pick": "NYK", "prob": 51, "correct": true}, {"date": "2026-05-22", "home": "SAS", "away": "OKC", "hp": 108, "ap": 123, "pick": "SAS", "prob": 53, "correct": false}, {"date": "2026-05-21", "home": "NYK", "away": "CLE", "hp": 109, "ap": 93, "pick": "NYK", "prob": 67, "correct": true}, {"date": "2026-05-20", "home": "OKC", "away": "SAS", "hp": 122, "ap": 113, "pick": "OKC", "prob": 63, "correct": true}, {"date": "2026-05-19", "home": "NYK", "away": "CLE", "hp": 115, "ap": 104, "pick": "NYK", "prob": 65, "correct": true}, {"date": "2026-05-18", "home": "OKC", "away": "SAS", "hp": 115, "ap": 122, "pick": "OKC", "prob": 66, "correct": false}, {"date": "2026-05-17", "home": "DET", "away": "CLE", "hp": 94, "ap": 125, "pick": "DET", "prob": 62, "correct": false}, {"date": "2026-05-15", "home": "MIN", "away": "SAS", "hp": 109, "ap": 139, "pick": "SAS", "prob": 54, "correct": true}, {"date": "2026-05-15", "home": "CLE", "away": "DET", "hp": 94, "ap": 115, "pick": "CLE", "prob": 60, "correct": false}, {"date": "2026-05-13", "home": "DET", "away": "CLE", "hp": 113, "ap": 117, "pick": "DET", "prob": 62, "correct": false}, {"date": "2026-05-12", "home": "SAS", "away": "MIN", "hp": 126, "ap": 97, "pick": "SAS", "prob": 70, "correct": true}, {"date": "2026-05-11", "home": "CLE", "away": "DET", "hp": 112, "ap": 103, "pick": "CLE", "prob": 54, "correct": true}, {"date": "2026-05-11", "home": "LAL", "away": "OKC", "hp": 110, "ap": 115, "pick": "OKC", "prob": 61, "correct": true}, {"date": "2026-05-10", "home": "PHI", "away": "NYK", "hp": 114, "ap": 144, "pick": "NYK", "prob": 55, "correct": true}, {"date": "2026-05-10", "home": "MIN", "away": "SAS", "hp": 114, "ap": 109, "pick": "SAS", "prob": 56, "correct": false}, {"date": "2026-05-09", "home": "LAL", "away": "OKC", "hp": 108, "ap": 131, "pick": "OKC", "prob": 58, "correct": true}, {"date": "2026-05-09", "home": "CLE", "away": "DET", "hp": 116, "ap": 109, "pick": "CLE", "prob": 51, "correct": true}, {"date": "2026-05-08", "home": "MIN", "away": "SAS", "hp": 108, "ap": 115, "pick": "SAS", "prob": 53, "correct": true}, {"date": "2026-05-08", "home": "PHI", "away": "NYK", "hp": 94, "ap": 108, "pick": "NYK", "prob": 52, "correct": true}, {"date": "2026-05-07", "home": "OKC", "away": "LAL", "hp": 125, "ap": 107, "pick": "OKC", "prob": 74, "correct": true}, {"date": "2026-05-07", "home": "DET", "away": "CLE", "hp": 107, "ap": 97, "pick": "DET", "prob": 66, "correct": true}, {"date": "2026-05-06", "home": "NYK", "away": "PHI", "hp": 108, "ap": 102, "pick": "NYK", "prob": 68, "correct": true}, {"date": "2026-05-06", "home": "SAS", "away": "MIN", "hp": 133, "ap": 95, "pick": "SAS", "prob": 69, "correct": true}, {"date": "2026-05-05", "home": "OKC", "away": "LAL", "hp": 108, "ap": 90, "pick": "OKC", "prob": 72, "correct": true}, {"date": "2026-05-05", "home": "DET", "away": "CLE", "hp": 111, "ap": 101, "pick": "DET", "prob": 64, "correct": true}, {"date": "2026-05-04", "home": "SAS", "away": "MIN", "hp": 102, "ap": 104, "pick": "SAS", "prob": 72, "correct": false}, {"date": "2026-05-04", "home": "NYK", "away": "PHI", "hp": 137, "ap": 98, "pick": "NYK", "prob": 66, "correct": true}, {"date": "2026-05-03", "home": "CLE", "away": "TOR", "hp": 114, "ap": 102, "pick": "CLE", "prob": 68, "correct": true}, {"date": "2026-05-03", "home": "DET", "away": "ORL", "hp": 116, "ap": 94, "pick": "DET", "prob": 69, "correct": true}, {"date": "2026-05-02", "home": "BOS", "away": "PHI", "hp": 100, "ap": 109, "pick": "BOS", "prob": 71, "correct": false}, {"date": "2026-05-01", "home": "ORL", "away": "DET", "hp": 79, "ap": 93, "pick": "ORL", "prob": 52, "correct": false}, {"date": "2026-05-01", "home": "HOU", "away": "LAL", "hp": 78, "ap": 98, "pick": "HOU", "prob": 55, "correct": false}, {"date": "2026-05-01", "home": "TOR", "away": "CLE", "hp": 112, "ap": 110, "pick": "CLE", "prob": 53, "correct": false}, {"date": "2026-04-30", "home": "MIN", "away": "DEN", "hp": 110, "ap": 98, "pick": "MIN", "prob": 54, "correct": true}, {"date": "2026-04-30", "home": "PHI", "away": "BOS", "hp": 106, "ap": 93, "pick": "BOS", "prob": 57, "correct": false}, {"date": "2026-04-30", "home": "ATL", "away": "NYK", "hp": 89, "ap": 140, "pick": "ATL", "prob": 51, "correct": false}, {"date": "2026-04-29", "home": "CLE", "away": "TOR", "hp": 125, "ap": 120, "pick": "CLE", "prob": 69, "correct": true}, {"date": "2026-04-29", "home": "LAL", "away": "HOU", "hp": 93, "ap": 99, "pick": "LAL", "prob": 67, "correct": false}, {"date": "2026-04-29", "home": "DET", "away": "ORL", "hp": 116, "ap": 109, "pick": "DET", "prob": 64, "correct": true}, {"date": "2026-04-28", "home": "NYK", "away": "ATL", "hp": 126, "ap": 97, "pick": "NYK", "prob": 65, "correct": true}, {"date": "2026-04-28", "home": "SAS", "away": "POR", "hp": 114, "ap": 95, "pick": "SAS", "prob": 80, "correct": true}, {"date": "2026-04-28", "home": "BOS", "away": "PHI", "hp": 97, "ap": 113, "pick": "BOS", "prob": 77, "correct": false}, {"date": "2026-04-27", "home": "DEN", "away": "MIN", "hp": 125, "ap": 113, "pick": "DEN", "prob": 62, "correct": true}, {"date": "2026-04-27", "home": "ORL", "away": "DET", "hp": 94, "ap": 88, "pick": "ORL", "prob": 51, "correct": true}, {"date": "2026-04-27", "home": "PHX", "away": "OKC", "hp": 122, "ap": 131, "pick": "OKC", "prob": 71, "correct": true}, {"date": "2026-04-26", "home": "TOR", "away": "CLE", "hp": 93, "ap": 89, "pick": "CLE", "prob": 54, "correct": false}, {"date": "2026-04-26", "home": "POR", "away": "SAS", "hp": 93, "ap": 114, "pick": "SAS", "prob": 64, "correct": true}, {"date": "2026-04-26", "home": "HOU", "away": "LAL", "hp": 115, "ap": 96, "pick": "LAL", "prob": 52, "correct": false}, {"date": "2026-04-26", "home": "PHI", "away": "BOS", "hp": 96, "ap": 128, "pick": "BOS", "prob": 59, "correct": true}, {"date": "2026-04-25", "home": "PHX", "away": "OKC", "hp": 109, "ap": 121, "pick": "OKC", "prob": 69, "correct": true}, {"date": "2026-04-25", "home": "ORL", "away": "DET", "hp": 113, "ap": 105, "pick": "DET", "prob": 52, "correct": false}, {"date": "2026-04-25", "home": "ATL", "away": "NYK", "hp": 98, "ap": 114, "pick": "ATL", "prob": 56, "correct": false}, {"date": "2026-04-25", "home": "MIN", "away": "DEN", "hp": 112, "ap": 96, "pick": "MIN", "prob": 53, "correct": true}, {"date": "2026-04-24", "home": "POR", "away": "SAS", "hp": 108, "ap": 120, "pick": "SAS", "prob": 62, "correct": true}, {"date": "2026-04-24", "home": "HOU", "away": "LAL", "hp": 108, "ap": 112, "pick": "HOU", "prob": 51, "correct": false}, {"date": "2026-04-24", "home": "PHI", "away": "BOS", "hp": 100, "ap": 108, "pick": "BOS", "prob": 56, "correct": true}, {"date": "2026-04-23", "home": "ATL", "away": "NYK", "hp": 109, "ap": 108, "pick": "ATL", "prob": 53, "correct": true}, {"date": "2026-04-23", "home": "TOR", "away": "CLE", "hp": 126, "ap": 104, "pick": "CLE", "prob": 57, "correct": false}, {"date": "2026-04-23", "home": "MIN", "away": "DEN", "hp": 113, "ap": 96, "pick": "MIN", "prob": 50, "correct": true}, {"date": "2026-04-22", "home": "DET", "away": "ORL", "hp": 98, "ap": 83, "pick": "DET", "prob": 68, "correct": true}, {"date": "2026-04-22", "home": "OKC", "away": "PHX", "hp": 120, "ap": 107, "pick": "OKC", "prob": 82, "correct": true}, {"date": "2026-04-21", "home": "SAS", "away": "POR", "hp": 103, "ap": 106, "pick": "SAS", "prob": 81, "correct": false}, {"date": "2026-04-21", "home": "LAL", "away": "HOU", "hp": 101, "ap": 94, "pick": "LAL", "prob": 66, "correct": true}, {"date": "2026-04-21", "home": "BOS", "away": "PHI", "hp": 97, "ap": 111, "pick": "BOS", "prob": 76, "correct": false}, {"date": "2026-04-20", "home": "NYK", "away": "ATL", "hp": 106, "ap": 107, "pick": "NYK", "prob": 68, "correct": false}, {"date": "2026-04-20", "home": "CLE", "away": "TOR", "hp": 115, "ap": 105, "pick": "CLE", "prob": 73, "correct": true}, {"date": "2026-04-20", "home": "DEN", "away": "MIN", "hp": 114, "ap": 119, "pick": "DEN", "prob": 71, "correct": false}, {"date": "2026-04-19", "home": "OKC", "away": "PHX", "hp": 119, "ap": 84, "pick": "OKC", "prob": 81, "correct": true}, {"date": "2026-04-19", "home": "DET", "away": "ORL", "hp": 101, "ap": 112, "pick": "DET", "prob": 71, "correct": false}, {"date": "2026-04-19", "home": "SAS", "away": "POR", "hp": 111, "ap": 98, "pick": "SAS", "prob": 80, "correct": true}, {"date": "2026-04-19", "home": "BOS", "away": "PHI", "hp": 123, "ap": 91, "pick": "BOS", "prob": 75, "correct": true}, {"date": "2026-04-18", "home": "DEN", "away": "MIN", "hp": 116, "ap": 105, "pick": "DEN", "prob": 70, "correct": true}, {"date": "2026-04-18", "home": "LAL", "away": "HOU", "hp": 107, "ap": 98, "pick": "LAL", "prob": 64, "correct": true}, {"date": "2026-04-18", "home": "NYK", "away": "ATL", "hp": 113, "ap": 102, "pick": "NYK", "prob": 67, "correct": true}, {"date": "2026-04-18", "home": "CLE", "away": "TOR", "hp": 126, "ap": 113, "pick": "CLE", "prob": 71, "correct": true}, {"date": "2026-04-17", "home": "PHX", "away": "GSW", "hp": 111, "ap": 96, "pick": "PHX", "prob": 69, "correct": true}, {"date": "2026-04-17", "home": "ORL", "away": "CHA", "hp": 121, "ap": 90, "pick": "ORL", "prob": 53, "correct": true}, {"date": "2026-04-15", "home": "PHI", "away": "ORL", "hp": 109, "ap": 97, "pick": "PHI", "prob": 59, "correct": true}, {"date": "2026-04-15", "home": "LAC", "away": "GSW", "hp": 121, "ap": 126, "pick": "LAC", "prob": 73, "correct": false}, {"date": "2026-04-14", "home": "CHA", "away": "MIA", "hp": 127, "ap": 126, "pick": "CHA", "prob": 67, "correct": true}, {"date": "2026-04-14", "home": "PHX", "away": "POR", "hp": 110, "ap": 114, "pick": "PHX", "prob": 62, "correct": false}];
 const NEXT = null;
+const CUBES = {"season": "2025-26", "eloBounds": [1613, 1550, 1504, 1360], "momBounds": [7, 0, -19, -35], "elo": [{"team": "OKC", "elo": 1741, "tier": 0, "tierName": "עילית"}, {"team": "NYK", "elo": 1729, "tier": 0, "tierName": "עילית"}, {"team": "SAS", "elo": 1697, "tier": 0, "tierName": "עילית"}, {"team": "BOS", "elo": 1639, "tier": 0, "tierName": "עילית"}, {"team": "DEN", "elo": 1621, "tier": 0, "tierName": "עילית"}, {"team": "DET", "elo": 1615, "tier": 0, "tierName": "עילית"}, {"team": "LAL", "elo": 1605, "tier": 1, "tierName": "חזק"}, {"team": "MIN", "elo": 1596, "tier": 1, "tierName": "חזק"}, {"team": "CLE", "elo": 1586, "tier": 1, "tierName": "חזק"}, {"team": "HOU", "elo": 1577, "tier": 1, "tierName": "חזק"}, {"team": "CHA", "elo": 1567, "tier": 1, "tierName": "חזק"}, {"team": "ATL", "elo": 1552, "tier": 1, "tierName": "חזק"}, {"team": "PHI", "elo": 1548, "tier": 2, "tierName": "בינוני"}, {"team": "ORL", "elo": 1547, "tier": 2, "tierName": "בינוני"}, {"team": "LAC", "elo": 1526, "tier": 2, "tierName": "בינוני"}, {"team": "TOR", "elo": 1524, "tier": 2, "tierName": "בינוני"}, {"team": "POR", "elo": 1517, "tier": 2, "tierName": "בינוני"}, {"team": "PHX", "elo": 1506, "tier": 2, "tierName": "בינוני"}, {"team": "MIA", "elo": 1503, "tier": 3, "tierName": "מתחת-לממוצע"}, {"team": "GSW", "elo": 1441, "tier": 3, "tierName": "מתחת-לממוצע"}, {"team": "NOP", "elo": 1407, "tier": 3, "tierName": "מתחת-לממוצע"}, {"team": "MIL", "elo": 1400, "tier": 3, "tierName": "מתחת-לממוצע"}, {"team": "DAL", "elo": 1377, "tier": 3, "tierName": "מתחת-לממוצע"}, {"team": "CHI", "elo": 1368, "tier": 3, "tierName": "מתחת-לממוצע"}, {"team": "SAC", "elo": 1359, "tier": 4, "tierName": "חלש"}, {"team": "IND", "elo": 1326, "tier": 4, "tierName": "חלש"}, {"team": "MEM", "elo": 1301, "tier": 4, "tierName": "חלש"}, {"team": "UTA", "elo": 1299, "tier": 4, "tierName": "חלש"}, {"team": "BKN", "elo": 1296, "tier": 4, "tierName": "חלש"}, {"team": "WAS", "elo": 1238, "tier": 4, "tierName": "חלש"}], "momentum": [{"team": "NYK", "mom": 74, "tier": 0, "tierName": "חיובי-חזק"}, {"team": "MIN", "mom": 16, "tier": 0, "tierName": "חיובי-חזק"}, {"team": "CHA", "mom": 15, "tier": 0, "tierName": "חיובי-חזק"}, {"team": "TOR", "mom": 15, "tier": 0, "tierName": "חיובי-חזק"}, {"team": "POR", "mom": 11, "tier": 0, "tierName": "חיובי-חזק"}, {"team": "IND", "mom": 8, "tier": 0, "tierName": "חיובי-חזק"}, {"team": "PHI", "mom": 7, "tier": 1, "tierName": "חיובי"}, {"team": "DET", "mom": 6, "tier": 1, "tierName": "חיובי"}, {"team": "DEN", "mom": 4, "tier": 1, "tierName": "חיובי"}, {"team": "DAL", "mom": 3, "tier": 1, "tierName": "חיובי"}, {"team": "OKC", "mom": 1, "tier": 1, "tierName": "חיובי"}, {"team": "ORL", "mom": 0, "tier": 1, "tierName": "חיובי"}, {"team": "SAC", "mom": -2, "tier": 2, "tierName": "יציב"}, {"team": "HOU", "mom": -5, "tier": 2, "tierName": "יציב"}, {"team": "CLE", "mom": -7, "tier": 2, "tierName": "יציב"}, {"team": "BKN", "mom": -9, "tier": 2, "tierName": "יציב"}, {"team": "LAL", "mom": -16, "tier": 2, "tierName": "יציב"}, {"team": "SAS", "mom": -18, "tier": 2, "tierName": "יציב"}, {"team": "PHX", "mom": -20, "tier": 3, "tierName": "שלילי"}, {"team": "LAC", "mom": -22, "tier": 3, "tierName": "שלילי"}, {"team": "MIL", "mom": -23, "tier": 3, "tierName": "שלילי"}, {"team": "MIA", "mom": -24, "tier": 3, "tierName": "שלילי"}, {"team": "UTA", "mom": -30, "tier": 3, "tierName": "שלילי"}, {"team": "ATL", "mom": -31, "tier": 3, "tierName": "שלילי"}, {"team": "BOS", "mom": -36, "tier": 4, "tierName": "שלילי-חזק"}, {"team": "CHI", "mom": -37, "tier": 4, "tierName": "שלילי-חזק"}, {"team": "GSW", "mom": -38, "tier": 4, "tierName": "שלילי-חזק"}, {"team": "MEM", "mom": -38, "tier": 4, "tierName": "שלילי-חזק"}, {"team": "WAS", "mom": -48, "tier": 4, "tierName": "שלילי-חזק"}, {"team": "NOP", "mom": -52, "tier": 4, "tierName": "שלילי-חזק"}], "totals": [{"team": "NYK", "off": 1.3, "def": -8.6, "net": 9.9}, {"team": "OKC", "off": 2.8, "def": -5.2, "net": 8.0}, {"team": "SAS", "off": 2.7, "def": -5.2, "net": 7.8}, {"team": "BOS", "off": -1.6, "def": -8.6, "net": 7.0}, {"team": "DET", "off": -0.9, "def": -6.5, "net": 5.6}, {"team": "CHA", "off": -0.3, "def": -5.8, "net": 5.5}, {"team": "DEN", "off": 5.0, "def": 1.3, "net": 3.7}, {"team": "HOU", "off": -2.5, "def": -6.1, "net": 3.6}, {"team": "TOR", "off": -0.7, "def": -3.3, "net": 2.5}, {"team": "LAC", "off": -0.3, "def": -2.4, "net": 2.1}, {"team": "MIA", "off": 5.9, "def": 4.2, "net": 1.8}, {"team": "CLE", "off": 0.4, "def": -0.4, "net": 0.8}, {"team": "ATL", "off": 0.7, "def": -0.0, "net": 0.7}, {"team": "LAL", "off": -1.9, "def": -2.6, "net": 0.7}, {"team": "ORL", "off": -3.1, "def": -3.0, "net": -0.0}, {"team": "POR", "off": -2.4, "def": -2.3, "net": -0.2}, {"team": "MIN", "off": -0.3, "def": 0.2, "net": -0.5}, {"team": "PHX", "off": -3.9, "def": -3.4, "net": -0.5}, {"team": "GSW", "off": -1.7, "def": 0.9, "net": -2.6}, {"team": "NOP", "off": 1.0, "def": 3.7, "net": -2.6}, {"team": "PHI", "off": -2.8, "def": 0.1, "net": -2.9}, {"team": "CHI", "off": 0.6, "def": 6.8, "net": -6.2}, {"team": "DAL", "off": -0.1, "def": 6.1, "net": -6.2}, {"team": "IND", "off": -0.9, "def": 5.7, "net": -6.6}, {"team": "MIL", "off": -5.4, "def": 2.2, "net": -7.7}, {"team": "SAC", "off": -3.5, "def": 5.0, "net": -8.4}, {"team": "UTA", "off": 1.8, "def": 10.4, "net": -8.6}, {"team": "MEM", "off": -1.9, "def": 8.2, "net": -10.0}, {"team": "BKN", "off": -10.3, "def": 1.2, "net": -11.5}, {"team": "WAS", "off": -1.9, "def": 10.4, "net": -12.3}], "composite": [{"team": "NYK", "score": 98.5, "elo": 1729, "gp": 102}, {"team": "OKC", "score": 98.4, "elo": 1741, "gp": 97}, {"team": "SAS", "score": 92.8, "elo": 1697, "gp": 106}, {"team": "BOS", "score": 84.8, "elo": 1639, "gp": 89}, {"team": "DET", "score": 80.5, "elo": 1615, "gp": 96}, {"team": "DEN", "score": 79.8, "elo": 1621, "gp": 88}, {"team": "LAL", "score": 74.9, "elo": 1605, "gp": 92}, {"team": "CHA", "score": 74.1, "elo": 1567, "gp": 84}, {"team": "HOU", "score": 73.9, "elo": 1577, "gp": 88}, {"team": "CLE", "score": 72.7, "elo": 1586, "gp": 100}, {"team": "MIN", "score": 72.6, "elo": 1596, "gp": 94}, {"team": "ATL", "score": 68.3, "elo": 1552, "gp": 88}, {"team": "ORL", "score": 67.0, "elo": 1547, "gp": 91}, {"team": "LAC", "score": 66.1, "elo": 1526, "gp": 83}, {"team": "TOR", "score": 66.1, "elo": 1524, "gp": 89}, {"team": "PHI", "score": 64.2, "elo": 1548, "gp": 94}, {"team": "POR", "score": 62.9, "elo": 1517, "gp": 88}, {"team": "MIA", "score": 62.7, "elo": 1503, "gp": 83}, {"team": "PHX", "score": 61.2, "elo": 1506, "gp": 88}, {"team": "GSW", "score": 50.7, "elo": 1441, "gp": 84}, {"team": "NOP", "score": 45.8, "elo": 1407, "gp": 82}, {"team": "MIL", "score": 40.4, "elo": 1400, "gp": 82}, {"team": "DAL", "score": 38.8, "elo": 1377, "gp": 82}, {"team": "CHI", "score": 37.4, "elo": 1368, "gp": 82}, {"team": "SAC", "score": 34.0, "elo": 1359, "gp": 82}, {"team": "IND", "score": 31.1, "elo": 1326, "gp": 82}, {"team": "UTA", "score": 25.4, "elo": 1299, "gp": 82}, {"team": "MEM", "score": 24.4, "elo": 1301, "gp": 82}, {"team": "BKN", "score": 21.9, "elo": 1296, "gp": 82}, {"team": "WAS", "score": 12.6, "elo": 1238, "gp": 82}]};
 // ===DATA_END===
 
 // ---- i18n ----
@@ -253,6 +354,28 @@ const I18N = {
     offseasonMsg:"🏀 Offseason — no games right now. The engine returns when the season tips off (around late October). The historical record below stands.",
     scannedMsg:"Scanned {n} games today · none met the confidence bar. The engine is selective — that's the discipline.",
     noGamesMsg:"No NBA games scheduled today. Check back on a game day.",
+    ranksBtn:"Rankings ▾", guideBtn:"How to read this page", discBtn:"Disclaimer & Privacy",
+    discFooter:"For information and entertainment only · Not betting advice · a prediction is not a profit.",
+    discLink:"Disclaimer & Privacy ⟶",
+    ranksTitle:"Rankings · 6 cubes",
+    engWinner:"Engine · winner", marketBar:"Market · Pinnacle (no-vig)",
+    marketPending:"Market line collected forward (CLV) — not yet available",
+    totalsLbl:"Totals · engine", totalsHonest:"Totals = indication, not yet validated vs market · CLV decides",
+    surpriseFlag:"Surprise · favorite on a back-to-back, underdog rested",
+    surpriseHonest:"Historically the rested underdog wins ~{u}% here (vs ~{b}% baseline)",
+    profLbl:"off/def profile",
+    gT:"How to read this page",
+    g1:"<b>The idea.</b> The engine rates every team in Elo and predicts the winner. It speaks on high-confidence (A+) calls and stays quieter otherwise.",
+    g2:"<b>Two bars.</b> Engine (what we think) vs Market (Pinnacle no-vig — \"what it costs\"). The gap between them is the possible value.",
+    gDemo:"Example: engine 88%, market 85%. Gap +3% = small value window. When engine and market agree (~0 gap) there's no value, and that's fine.",
+    g3:"<b>A+ and silence.</b> A+ = high stage crossed with high confidence; the favorite historically won ~83%. That's not edge — clear favorites win often.",
+    g4:"<b>Value block & colors.</b> Green = 3–10% gap (value). Teal = >10% (open question). Gray = in line with market (no value). The gap is a <b>hypothesis to measure</b> — CLV decides.",
+    g5:"<b>Totals.</b> Engine vs market on over/under, from offense/defense ratings. <b>Indication only</b> — not yet validated vs market.",
+    g6:"<b>Surprise 🔥.</b> Lights up when a clear favorite plays a back-to-back and the underdog is rested — historically more upset-prone (~30% vs ~24%).",
+    g7:"<b>CLV is the arbiter.</b> A prediction is not a profit; edge = a better price. Only CLV vs the closing line decides if there's a real advantage.",
+    dT:"Disclaimer & Privacy", dDiscH:"Disclaimer", dPrivH:"Privacy",
+    dDisc:"This dashboard and its content are <b>for information and entertainment only</b> — not financial, investment, legal, or betting advice, nor a recommendation to bet. Probabilities are <b>estimates, not certainties</b> — no outcome is guaranteed, and past performance does not guarantee future results. Any decision is <b>at your own risk</b>. Use is for 18+ (or the age of majority where you live). If gambling is hurting you or someone you know, get help: NCPG (<a href=\"https://www.ncpgambling.org\" target=\"_blank\" rel=\"noopener\">ncpgambling.org</a> · 1-800-MY-RESET) or GamCare (<a href=\"https://www.gamcare.org.uk\" target=\"_blank\" rel=\"noopener\">gamcare.org.uk</a> · 0808 8020 133).",
+    dPriv:"Analytics via GoatCounter — no cookies, no personally identifying data. No individual tracking. Contact: qmanagement613@gmail.com.",
   },
   he:{
     h1:"לוח הניבויים",
@@ -301,6 +424,28 @@ const I18N = {
     offseasonMsg:"🏀 מחוץ לעונה — אין משחקים כרגע. המנוע חוזר כשהעונה נפתחת (סביב סוף אוקטובר). הרשומה ההיסטורית למטה עומדת בעינה.",
     scannedMsg:"נסרקו {n} משחקים היום · אף אחד לא עבר את סף הביטחון. המנוע בררן — זו המשמעת.",
     noGamesMsg:"אין משחקי NBA מתוכננים היום. חזור ביום משחק.",
+    ranksBtn:"דירוגים ▾", guideBtn:"איך לקרוא את הדף", discBtn:"הצהרה ופרטיות",
+    discFooter:"למידע ובידור בלבד · אינו ייעוץ-הימורים · ניבוי אינו רווח.",
+    discLink:"הצהרה ופרטיות ⟶",
+    ranksTitle:"דירוגים · 6 קוביות",
+    engWinner:"מנוע · מי מנצח", marketBar:"שוק · Pinnacle (מנוקה-vig)",
+    marketPending:"קו-השוק נאסף קדימה (CLV) — טרם זמין",
+    totalsLbl:"טוטאל · מנוע", totalsHonest:"טוטאל = אינדיקציה, טרם-מאומת מול שוק · CLV יחליט",
+    surpriseFlag:"גורם-הפתעה · הפייבוריט בגב-אל-גב, האנדרדוג רענן",
+    surpriseHonest:"היסטורית: אנדרדוג-רענן מנצח ~{u}% במצב כזה (מול ~{b}% רגיל)",
+    profLbl:"פרופיל התקפה/הגנה",
+    gT:"איך לקרוא את הדף",
+    g1:"<b>הרעיון.</b> המנוע מדרג כל קבוצה ב-Elo ומנבא מי מנצח. הוא מדבר על קריאות-ביטחון-גבוה (A+) ושותק יותר אחרת.",
+    g2:"<b>שני הברים.</b> בר-מנוע (מה שאנחנו חושבים) מול בר-שוק (Pinnacle מנוקה-vig — \"מה עולה\"). הפער ביניהם הוא ה\"ערך\" האפשרי.",
+    gDemo:"דוגמה: מנוע 88%, שוק 85%. פער +3% = חלון-ערך קטן. אם המנוע והשוק מסכימים (פער ~0) — אין ערך, וזה בסדר.",
+    g3:"<b>A+ ושתיקה.</b> A+ = שלב-גבוה כפול ביטחון-גבוה; היסטורית הפייבוריט ניצח ~83%. זה לא edge — פייבוריטים-ברורים מנצחים הרבה.",
+    g4:"<b>בלוק-הערך והצבעים.</b> ירוק = פער 3–10% (חלון-ערך). כחלחל = פער >10% (שאלה-פתוחה). אפור = בקו עם השוק (אין ערך). הפער הוא <b>השערה-למדידה</b> — CLV מכריע.",
+    g5:"<b>טוטאל.</b> בר-מנוע מול בר-שוק על מעל/מתחת, מדירוגי-התקפה/הגנה. <b>אינדיקציה בלבד</b> — טרם-מאומת מול שוק.",
+    g6:"<b>גורם-הפתעה 🔥.</b> נדלק כשפייבוריט-ברור משחק גב-אל-גב והאנדרדוג רענן — היסטורית נוטה יותר להפתעות (~30% מול ~24%).",
+    g7:"<b>CLV הוא הארביטר.</b> ניבוי אינו רווח; edge = מחיר טוב יותר. רק CLV מול קו-הסגירה מכריע אם יש יתרון אמיתי.",
+    dT:"הצהרה ופרטיות", dDiscH:"הצהרה", dPrivH:"פרטיות",
+    dDisc:"דאשבורד זה ותוכנו ניתנים <b>למטרות מידע ובידור בלבד</b>, ואינם ייעוץ פיננסי, השקעתי, משפטי או הימורים, ואף לא המלצה להמר. ההסתברויות הן <b>אומדנים, לא ודאויות</b> — אין הבטחה לתוצאה, וביצועי-עבר אינם מבטיחים עתיד. כל החלטה היא <b>באחריותך הבלעדית</b>. השימוש מגיל 18+ (או גיל-הבגירות במקומך). אם הימורים פוגעים בך או במישהו שאתה מכיר — פנה לעזרה: NCPG (<a href=\"https://www.ncpgambling.org\" target=\"_blank\" rel=\"noopener\">ncpgambling.org</a> · 1-800-MY-RESET) או GamCare (<a href=\"https://www.gamcare.org.uk\" target=\"_blank\" rel=\"noopener\">gamcare.org.uk</a> · 0808 8020 133).",
+    dPriv:"אנליטיקס דרך GoatCounter — ללא עוגיות וללא מידע-מזהה. אין מעקב-אישי. יצירת-קשר: qmanagement613@gmail.com.",
   },
 };
 const STAGE = {
@@ -365,6 +510,26 @@ function render(filter){
         `${sev?t("fatLabelSevere"):t("fatLabelNormal")} · ~${p.fatigue.upset_pct}% ${t("fatVsBase")} ~${p.fatigue.base_pct}%`+
         `<div style="color:var(--faint);font-size:11px;margin-top:2px">${t("fatNote")}</div></div>`;
     }
+    // דגל גורם-ההפתעה 🔥 (אות מאומת חי +5.4pp) — נתיב נפרד מ-fatigue
+    let surpHtml = "";
+    if(p.surprise){
+      surpHtml = `<div class="flag">🔥 ${t("surpriseFlag")}</div>`+
+        `<div class="honest">${t("surpriseHonest").replace("{u}",p.surprise.upset_pct).replace("{b}",p.surprise.base_pct)}</div>`;
+    }
+    // בר-טוטאל: צד-מנוע + פרופיל off/def. צד-שוק (marketTotal) נאסף קדימה (CLV).
+    let totHtml = "";
+    if(p.totalEng!=null){
+      let prof = "";
+      if(p.totalProfile && p.totalProfile.home && p.totalProfile.away){
+        prof = ` <span class="prof" style="color:var(--faint);font-size:10.5px">(${t("profLbl")}: `+
+          `${p.home} net ${p.totalProfile.home.net} · ${p.away} net ${p.totalProfile.away.net})</span>`;
+      }
+      let mkt = (p.marketTotal!=null)
+        ? `<div class="gapline gray"><span>${t("marketBar")}: ${p.marketTotal}</span></div>`
+        : `<div class="honest">${t("marketPending")}</div>`;
+      totHtml = `<div class="barlbl"><span>${t("totalsLbl")}</span><span>${p.totalEng}${prof}</span></div>`+
+        mkt + `<div class="honest">${t("totalsHonest")}</div>`;
+    }
     return `
     <div class="card">
       <div class="top"><span class="date">${fmtDate(p.date)}</span>${oc}</div>
@@ -374,7 +539,9 @@ function render(filter){
         <div class="conf-top"><span class="v">${p.prob}<small>${t("conf")}</small></span></div>
         <div class="conf-bar"><i style="width:${p.prob}%;background:${col}"></i></div>
       </div>
+      ${surpHtml}
       ${fatHtml}
+      ${totHtml}
       <div class="foot">
         <span class="badge ${tr}"><span class="num">${p.stage}</span> ${sname}</span>
         <span class="cell">${cell}</span>
@@ -421,13 +588,78 @@ function renderNext(){
   </div>`;
 }
 
+// ---- קוביות-דירוג (6) ----
+const CUBE_META = {
+  elo:{he:["1 · כוח כללי · דירוג Elo","מדרג את כל 30 הקבוצות לפי חוזק-Elo כללי — לא תלוי-יום."],
+       en:["1 · Overall power · Elo","All 30 teams by overall Elo strength — not day-dependent."]},
+  todayTeams:{he:["2 · קבוצות-היום · סיכוי-ניצחון","קבוצות-היום לפי הסיכוי לנצח (הסתברות-המנוע)."],
+       en:["2 · Today's teams · win%","Today's teams by engine win chance."]},
+  todayGames:{he:["3 · משחקי-היום · לפי ביטחון","משחקי-היום מהחזק לצמוד, לפי ביטחון-המנוע."],
+       en:["3 · Today's games · confidence","Today's games strongest to closest, by engine confidence."]},
+  totals:{he:["4 · טוטאל · התקפה/הגנה","כל הקבוצות לפי נטו-נקודות (off−def). תיוג-פרופיל, לא קובייה עצמאית."],
+       en:["4 · Totals · off/def","All teams by net points (off−def). Profile tag, not a standalone cube."]},
+  composite:{he:["5 · ציון-משולב · חוזק כולל","ציון גאומטרי: מנצח40·Elo30·טוטאל20·נתונים10. ציון-ניתוח, לא המלצת-הימור."],
+       en:["5 · Composite · overall","Geometric: winner40·Elo30·totals20·data10. Analytic score, not a tip."]},
+  momentum:{he:["6 · מומנטום · מגמת 10 משחקים","כיוון אחרון — שינוי ה-Elo ב-10 המשחקים האחרונים. מתאר, לא מנבא."],
+       en:["6 · Momentum · last 10","Recent direction — Elo change over last 10 games. Describes, doesn't predict."]},
+};
+function cubeWrap(key, open, rowsHtml){
+  const m = CUBE_META[key][LANG] || CUBE_META[key].en;
+  return `<details class="cube"${open?" open":""}>
+    <summary><span>${m[0]}</span><span class="car" aria-hidden="true">›</span></summary>
+    <div class="cbody"><p class="chelp">${m[1]}</p>${rowsHtml}</div></details>`;
+}
+function tierRows(arr, valFn, dotFn, labelFn, groupFn){
+  // arr ממוין; מכניס כותרת-קבוצה כשהקבוצה משתנה
+  let html="", lastG=null;
+  arr.forEach(x=>{
+    const g = groupFn ? groupFn(x) : null;
+    if(g!==null && g!==lastG){ html+=`<div class="trow">${g}</div>`; lastG=g; }
+    const lab = labelFn ? `<span class="tlabel">${labelFn(x)}</span>` : "";
+    html+=`<div class="tier"><span class="tdot t${dotFn(x)}"></span><span class="tname">${x.team}</span>${lab}<span class="tval">${valFn(x)}</span></div>`;
+  });
+  return html;
+}
+function renderCubes(){
+  const box=document.getElementById("ranks");
+  if(typeof CUBES==="undefined" || !CUBES){ box.innerHTML=""; return; }
+  let html="";
+  // 1 · Elo (league, מקובץ-רמות)
+  html += cubeWrap("elo", true, tierRows(CUBES.elo,
+    x=>x.elo, x=>x.tier+1, null, x=>x.tierName));
+  // 2 · today's teams (מ-PICKS)
+  if(typeof PICKS!=="undefined" && PICKS.length){
+    const tt = PICKS.map(p=>({team:`${p.pick} (${p.road?"@":"vs"} ${p.pick===p.home?p.away:p.home})`,
+      prob:p.prob, tier:p.prob>=80?1:p.prob>=70?2:p.prob>=60?3:4})).sort((a,b)=>b.prob-a.prob);
+    html += cubeWrap("todayTeams", false, tierRows(tt, x=>x.prob+"%", x=>x.tier, null, null));
+    // 3 · today's games (מ-PICKS)
+    const tg = PICKS.map(p=>({team:`${p.home} vs ${p.away}`, prob:p.prob,
+      tier:p.prob>=80?1:p.prob>=70?2:p.prob>=60?3:4,
+      lab:(p.prob>=80?"A+ · ":"")+(p.totalEng!=null?("tot "+p.totalEng):"")})).sort((a,b)=>b.prob-a.prob);
+    html += cubeWrap("todayGames", false, tierRows(tg, x=>x.prob+"%", x=>x.tier, x=>x.lab, null));
+  }
+  // 4 · totals (league, לפי net)
+  const tl = CUBES.totals.map((x,i)=>({team:x.team, net:x.net, off:x.off, def:x.def,
+    tier:i<6?1:i<12?2:i<18?3:i<24?4:5}));
+  html += cubeWrap("totals", false, tierRows(tl,
+    x=>(x.net>0?"+":"")+x.net, x=>x.tier, x=>`off ${x.off} · def ${x.def}`, null));
+  // 5 · composite (league)
+  const cl = CUBES.composite.map((x,i)=>({team:x.team, score:x.score,
+    tier:i<6?1:i<12?2:i<18?3:i<24?4:5}));
+  html += cubeWrap("composite", false, tierRows(cl, x=>x.score, x=>x.tier, null, null));
+  // 6 · momentum (league, מקובץ-רמות)
+  html += cubeWrap("momentum", false, tierRows(CUBES.momentum,
+    x=>(x.mom>0?"+":"")+x.mom, x=>x.tier+1, null, x=>x.tierName));
+  box.innerHTML = html;
+}
+
 function applyLang(){
   document.documentElement.lang = LANG;
   document.documentElement.dir = (LANG==="he") ? "rtl" : "ltr";
   document.querySelectorAll("[data-i18n]").forEach(el=>{ el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll("[data-i18n-html]").forEach(el=>{ el.innerHTML = t(el.dataset.i18nHtml); });
   document.querySelectorAll(".lang button").forEach(b=> b.classList.toggle("on", b.dataset.lang===LANG));
-  renderFresh(); renderCalib(); renderTrack(); render(currentFilter); renderNext(); renderDecided();
+  renderFresh(); renderCalib(); renderTrack(); render(currentFilter); renderNext(); renderDecided(); renderCubes();
 }
 
 function openHowto(){
@@ -442,6 +674,29 @@ document.querySelectorAll(".toggle:not(.lang) button").forEach(b=>{
   b.onclick=()=>{ document.querySelectorAll(".toggle:not(.lang) button").forEach(x=>x.classList.remove("on"));
     b.classList.add("on"); render(b.dataset.f); };
 });
+
+// ---- שדרוג: קוביות-toggle + מודלים + back-to-top ----
+(function(){
+  const ranksBtn=document.getElementById("ranksBtn"), ranks=document.getElementById("ranks");
+  if(ranksBtn) ranksBtn.onclick=function(){
+    const open=ranks.style.display==="block";
+    ranks.style.display=open?"none":"block";
+    this.setAttribute("aria-expanded", String(!open));
+  };
+  function openModal(id){const m=document.getElementById(id); if(m){m.classList.add("open");document.body.style.overflow="hidden";}}
+  function closeModals(){document.querySelectorAll(".modal").forEach(m=>m.classList.remove("open"));document.body.style.overflow="";}
+  const gb=document.getElementById("guideBtn"); if(gb) gb.onclick=()=>openModal("guideModal");
+  const db=document.getElementById("discBtn"); if(db) db.onclick=()=>openModal("discModal");
+  const db2=document.getElementById("discBtn2"); if(db2) db2.onclick=()=>openModal("discModal");
+  document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closeModals);
+  document.querySelectorAll(".modal").forEach(m=>m.onclick=e=>{if(e.target===m)closeModals();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModals();});
+  const toTop=document.getElementById("toTop");
+  if(toTop){
+    toTop.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
+    window.addEventListener("scroll",()=>{toTop.classList.toggle("show", window.scrollY>300);});
+  }
+})();
 
 applyLang();
 </script>
