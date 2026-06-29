@@ -105,6 +105,42 @@
   .conf-top .v small{font-size:12px;color:var(--muted);font-weight:400}
   .conf-bar{height:5px;background:var(--panel2);border-radius:4px;margin-top:6px;overflow:hidden}
   .conf-bar i{display:block;height:100%;border-radius:4px}
+  /* ===== ברים בסגנון טניס/בייסבול: מנוע מול שוק + value-zone + טוטאל ===== */
+  .barwrap{margin:10px 0;direction:ltr}
+  .barlabel{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .row-label{font-size:11px;font-weight:800;color:var(--muted)}
+  .row-sub{font-size:10px;color:var(--faint);font-style:italic}
+  .bar{display:flex;height:26px;border-radius:7px;overflow:hidden;font-size:12px;font-weight:700}
+  .seg{display:flex;align-items:center;justify-content:center;min-width:0;overflow:hidden;white-space:nowrap;padding:0 4px}
+  .seg.pickseg{background:linear-gradient(90deg,#3f6fd0,var(--blue));color:#0f1115}      /* טקסט כהה — WCAG 1.4.3 */
+  .seg.oppseg{background:var(--panel2);color:var(--muted)}
+  .seg.pickseg.mkt{background:linear-gradient(90deg,#9d63e0,#b06bff);color:#0f1115}
+  .seg.oppseg.mkt{background:var(--panel2);color:var(--muted)}
+  .axis{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:3px;direction:ltr}
+  .axis span{max-width:48%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .vgap{border-radius:9px;padding:8px 11px;font-size:12.5px;margin-top:6px;border:1px solid}
+  .vgap .big{font-weight:700}
+  .vgap .cap{font-size:11px;color:var(--muted);margin-top:3px}
+  .vgap.green{background:rgba(70,192,138,.1);border-color:rgba(70,192,138,.4)} .vgap.green .big{color:var(--t-high)}
+  .vgap.teal{background:rgba(125,143,196,.12);border-color:rgba(125,143,196,.4)} .vgap.teal .big{color:#aab8e0}
+  .vgap.gray{background:var(--panel2);border-color:var(--line)} .vgap.gray .big{color:var(--muted)}
+  /* בר-טוטאל תיאורי (.tbar) — סמן-מנוע תמיד, סמן-קו graceful */
+  .barwrap.totals{margin-top:10px}
+  .tbar{position:relative;height:30px;background:var(--panel2);border:1px solid var(--line);border-radius:7px;direction:ltr;overflow:hidden}
+  .tmark{position:absolute;top:0;height:100%;transform:translateX(-50%)}
+  .tmark.line{width:2px;background:#b06bff}
+  .tmark.eng{width:3px;background:var(--blue)}
+  .taxis{font-size:11.5px;color:var(--muted);margin-top:4px}
+  .taxis b{color:var(--ink)}
+  .tcap{font-size:10.5px;color:var(--faint);margin-top:2px;font-style:italic}
+  /* בורר-עדשה לדירוג-היום */
+  .lens{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
+  .lens button{background:var(--panel2);border:1px solid var(--line);color:var(--muted);font-family:inherit;
+    font-size:12px;padding:5px 11px;border-radius:8px;cursor:pointer}
+  .lens button.on{background:var(--blue);border-color:var(--blue);color:#0f1115;font-weight:700}
+  .datepick{display:inline-flex;align-items:center;gap:6px}
+  .datepick input{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:8px;
+    padding:6px 10px;font-size:12.5px;color-scheme:dark;font-family:inherit}
   .foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:8px}
   .badge{display:inline-flex;align-items:center;gap:6px;border-radius:8px;padding:4px 9px;font-size:12px;
     font-weight:500;border:1px solid}
@@ -206,6 +242,7 @@
     <button class="ctl" id="ranksBtn" aria-expanded="false" aria-controls="ranks" data-i18n="ranksBtn"></button>
     <button class="ctl" id="guideBtn" data-i18n="guideBtn"></button>
     <button class="ctl" id="discBtn" data-i18n="discBtn"></button>
+    <label class="datepick"><span data-i18n="byDate"></span><input type="date" id="datePick" aria-label="Pick a date"></label>
   </div>
   <div id="ranks"></div>
 
@@ -294,7 +331,7 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-29 21:13", "lastGood": "2026-06-29 21:13"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-29 17:29", "lastGood": "2026-06-29 17:29"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 62, "n": 1963}, {"band": "70–80%", "actual": 73, "n": 1393}, {"band": "80–85%", "actual": 78, "n": 374}, {"band": "85%+", "actual": 86, "n": 249}];
 const PICKS = [];
@@ -361,6 +398,14 @@ const I18N = {
     engWinner:"Engine · winner", marketBar:"Market · Pinnacle (no-vig)",
     marketPending:"Market line collected forward (CLV) — not yet available",
     totalsLbl:"Totals · engine", totalsHonest:"Totals = indication, not yet validated vs market · CLV decides",
+    rowWorth:"what it's worth", rowCosts:"what it costs",
+    zoneValue:"Value · gap {g}% on the call", zoneOpen:"Large gap {g}% · open question",
+    zoneNone:"In line with market · {g}% · no value", zoneCap:"Gap is a hypothesis to measure — CLV decides",
+    totalRow:"Total points", modelVsLine:"model vs line", totEng:"Engine predicts",
+    totLine:"line", leanOver:"lean over", leanUnder:"lean under", leanNone:"no lean",
+    lens_conf:"Confidence", lens_value:"Value", lens_totals:"Totals",
+    lensNoMkt:"No market data yet — value lens activates when CLV collection starts.",
+    lensNoGames:"No games today.", byDate:"By date:",
     surpriseFlag:"Surprise · favorite on a back-to-back, underdog rested",
     surpriseHonest:"Historically the rested underdog wins ~{u}% here (vs ~{b}% baseline)",
     profLbl:"off/def profile",
@@ -431,6 +476,14 @@ const I18N = {
     engWinner:"מנוע · מי מנצח", marketBar:"שוק · Pinnacle (מנוקה-vig)",
     marketPending:"קו-השוק נאסף קדימה (CLV) — טרם זמין",
     totalsLbl:"טוטאל · מנוע", totalsHonest:"טוטאל = אינדיקציה, טרם-מאומת מול שוק · CLV יחליט",
+    rowWorth:"מה שווה", rowCosts:"מה עולה",
+    zoneValue:"ערך · פער {g}% לצד-הקריאה", zoneOpen:"פער גדול {g}% · שאלה-פתוחה",
+    zoneNone:"בקו עם השוק · {g}% · אין ערך", zoneCap:"הפער הוא השערה-למדידה — CLV מכריע",
+    totalRow:"סך נקודות", modelVsLine:"מודל מול קו", totEng:"המנוע צופה",
+    totLine:"קו", leanOver:"נטייה מעל", leanUnder:"נטייה מתחת", leanNone:"ללא נטייה",
+    lens_conf:"ביטחון", lens_value:"ערך", lens_totals:"טוטאל",
+    lensNoMkt:"אין עדיין נתוני-שוק — עדשת-הערך תיפתח כשאיסוף-ה-CLV יתחיל.",
+    lensNoGames:"אין משחקים היום.", byDate:"לפי תאריך:",
     surpriseFlag:"גורם-הפתעה · הפייבוריט בגב-אל-גב, האנדרדוג רענן",
     surpriseHonest:"היסטורית: אנדרדוג-רענן מנצח ~{u}% במצב כזה (מול ~{b}% רגיל)",
     profLbl:"פרופיל התקפה/הגנה",
@@ -457,6 +510,7 @@ const STAGE = {
 
 let LANG = "en";
 let currentFilter = "all";
+let curDate = "";   // date-picker (ISO ""); ריק = הכל
 function t(k){ return (I18N[LANG] && I18N[LANG][k]!==undefined) ? I18N[LANG][k] : I18N.en[k]; }
 
 function fmtDate(s){ const p=String(s).split("-"); if(p.length!==3) return s;
@@ -516,32 +570,66 @@ function render(filter){
       surpHtml = `<div class="flag">🔥 ${t("surpriseFlag")}</div>`+
         `<div class="honest">${t("surpriseHonest").replace("{u}",p.surprise.upset_pct).replace("{b}",p.surprise.base_pct)}</div>`;
     }
-    // בר-טוטאל: צד-מנוע + פרופיל off/def. צד-שוק (marketTotal) נאסף קדימה (CLV).
-    let totHtml = "";
+    // ── בר-מנוע (תמיד): צד-הקריאה מול הצד השני ──
+    const engPick = p.prob, engOpp = 100 - p.prob;
+    const engBar = `
+      <div class="barwrap">
+        <div class="barlabel"><span class="row-label">${t("engWinner")}</span><span class="row-sub">${t("rowWorth")}</span></div>
+        <div class="bar"><span class="seg pickseg" style="flex:0 0 ${engPick}%">${engPick>=14?engPick+'%':''}</span><span class="seg oppseg" style="flex:1">${engOpp>=14?engOpp+'%':''}</span></div>
+        <div class="axis"><span>${p.pick}</span><span>${p.pick===p.home?p.away:p.home}</span></div>
+      </div>`;
+    // ── בר-שוק + value-zone (graceful: רק אם יש prob-שוק; נאסף קדימה ב-CLV) ──
+    let mktBar = "", valueZone = "";
+    if(p.marketProb!=null){
+      const mp = Math.round(p.marketProb), mo = 100 - mp;
+      mktBar = `
+      <div class="barwrap">
+        <div class="barlabel"><span class="row-label">${t("marketBar")}</span><span class="row-sub">${t("rowCosts")}</span></div>
+        <div class="bar"><span class="seg pickseg mkt" style="flex:0 0 ${mp}%">${mp>=14?mp+'%':''}</span><span class="seg oppseg mkt" style="flex:1">${mo>=14?mo+'%':''}</span></div>
+      </div>`;
+      const gp = Math.round(engPick - mp);
+      let zone, zlab;
+      if(gp>=3 && gp<=10){ zone="green"; zlab=t("zoneValue").replace("{g}", "+"+gp); }
+      else if(gp>10){ zone="teal"; zlab=t("zoneOpen").replace("{g}", "+"+gp); }
+      else { zone="gray"; zlab=t("zoneNone").replace("{g}", (gp>=0?"+":"")+gp); }
+      valueZone = `<div class="vgap ${zone}"><span class="big">${zlab}</span><div class="cap">${t("zoneCap")}</div></div>`;
+    } else {
+      valueZone = `<div class="vgap gray"><span class="big">${t("marketPending")}</span></div>`;
+    }
+    // ── בר-טוטאל (.tbar): סמן-מנוע תמיד; סמן-קו graceful ──
+    let totBar = "";
     if(p.totalEng!=null){
+      const TMIN=190, TMAX=260, pos=v=>Math.max(0,Math.min(100,(v-TMIN)/(TMAX-TMIN)*100));
+      const engPos = pos(p.totalEng);
+      let lineMark = "", lean = "";
+      if(p.marketTotal!=null){
+        lineMark = `<span class="tmark line" style="left:${pos(p.marketTotal)}%"></span>`;
+        const d = p.totalEng - p.marketTotal;
+        lean = ` · ${t("totLine")} <b>${p.marketTotal}</b> · ${Math.abs(d)<0.5?t("leanNone"):(d>0?t("leanOver"):t("leanUnder"))} ${d>0?'+':''}${d.toFixed(1)}`;
+      }
       let prof = "";
       if(p.totalProfile && p.totalProfile.home && p.totalProfile.away){
-        prof = ` <span class="prof" style="color:var(--faint);font-size:10.5px">(${t("profLbl")}: `+
-          `${p.home} net ${p.totalProfile.home.net} · ${p.away} net ${p.totalProfile.away.net})</span>`;
+        prof = ` · ${p.home} net ${p.totalProfile.home.net} / ${p.away} net ${p.totalProfile.away.net}`;
       }
-      let mkt = (p.marketTotal!=null)
-        ? `<div class="gapline gray"><span>${t("marketBar")}: ${p.marketTotal}</span></div>`
-        : `<div class="honest">${t("marketPending")}</div>`;
-      totHtml = `<div class="barlbl"><span>${t("totalsLbl")}</span><span>${p.totalEng}${prof}</span></div>`+
-        mkt + `<div class="honest">${t("totalsHonest")}</div>`;
+      totBar = `
+      <div class="barwrap totals">
+        <div class="barlabel"><span class="row-label">${t("totalRow")}</span><span class="row-sub">${t("modelVsLine")}</span></div>
+        <div class="tbar"><span class="tmark eng" style="left:${engPos}%"></span>${lineMark}</div>
+        <div class="taxis">${t("totEng")} <b>${p.totalEng}</b>${lean}${prof}</div>
+        <div class="tcap">${t("totalsHonest")}</div>
+      </div>`;
     }
     return `
     <div class="card">
       <div class="top"><span class="date">${fmtDate(p.date)}</span>${oc}</div>
       <div class="match">${match}</div>
       <div class="picked">${t("pickLbl")}<span class="team">${p.pick}</span> ${p.road?t("road"):t("home")}</div>
-      <div class="conf-wrap">
-        <div class="conf-top"><span class="v">${p.prob}<small>${t("conf")}</small></span></div>
-        <div class="conf-bar"><i style="width:${p.prob}%;background:${col}"></i></div>
-      </div>
+      ${engBar}
+      ${mktBar}
+      ${valueZone}
       ${surpHtml}
       ${fatHtml}
-      ${totHtml}
+      ${totBar}
       <div class="foot">
         <span class="badge ${tr}"><span class="num">${p.stage}</span> ${sname}</span>
         <span class="cell">${cell}</span>
@@ -552,10 +640,12 @@ function render(filter){
 
 function renderDecided(){
   const box=document.getElementById("decided");
-  if(!DECIDED.length){ document.getElementById("decidedSection").style.display="none"; box.innerHTML=""; return; }
+  // date-picker: סינון לפי תאריך נבחר (ISO ישיר — נתוני-NBA הם ISO, לא compact כמו טניס → ללא replace)
+  const list = curDate ? DECIDED.filter(d=>d.date===curDate) : DECIDED;
+  if(!list.length){ document.getElementById("decidedSection").style.display="none"; box.innerHTML=""; return; }
   document.getElementById("decidedSection").style.display="";
   const vs=`<span style="color:var(--faint);font-size:14px">${t("vs")}</span>`;
-  box.innerHTML = DECIDED.map(d=>{
+  box.innerHTML = list.map(d=>{
     const homeWon=d.hp>d.ap, winner=homeWon?d.home:d.away;
     const wpts=Math.max(d.hp,d.ap), lpts=Math.min(d.hp,d.ap), margin=wpts-lpts;
     const match=homeWon?`<b>${d.home}</b> ${vs} ${d.away}`:`${d.home} ${vs} <b>${d.away}</b>`;
@@ -592,10 +682,8 @@ function renderNext(){
 const CUBE_META = {
   elo:{he:["1 · כוח כללי · דירוג Elo","מדרג את כל 30 הקבוצות לפי חוזק-Elo כללי — לא תלוי-יום."],
        en:["1 · Overall power · Elo","All 30 teams by overall Elo strength — not day-dependent."]},
-  todayTeams:{he:["2 · קבוצות-היום · סיכוי-ניצחון","קבוצות-היום לפי הסיכוי לנצח (הסתברות-המנוע)."],
-       en:["2 · Today's teams · win%","Today's teams by engine win chance."]},
-  todayGames:{he:["3 · משחקי-היום · לפי ביטחון","משחקי-היום מהחזק לצמוד, לפי ביטחון-המנוע."],
-       en:["3 · Today's games · confidence","Today's games strongest to closest, by engine confidence."]},
+  today:{he:["דירוג היום · קבוצות-היום","משחקי-היום, מסודרים לפי העדשה שתבחר. render-only על משחקי-היום."],
+       en:["Today · today's teams","Today's games, sorted by the lens you pick. Render-only on today's games."]},
   totals:{he:["4 · טוטאל · התקפה/הגנה","כל הקבוצות לפי נטו-נקודות (off−def). תיוג-פרופיל, לא קובייה עצמאית."],
        en:["4 · Totals · off/def","All teams by net points (off−def). Profile tag, not a standalone cube."]},
   composite:{he:["5 · ציון-משולב · חוזק כולל","ציון גאומטרי: מנצח40·Elo30·טוטאל20·נתונים10. ציון-ניתוח, לא המלצת-הימור."],
@@ -620,24 +708,39 @@ function tierRows(arr, valFn, dotFn, labelFn, groupFn){
   });
   return html;
 }
+let todayLens = "conf";   // ביטחון / ערך / טוטאל
+function setTodayLens(l){ todayLens = l; renderCubes(); }
+function renderTodayCube(){
+  // render-only על PICKS. עדשות: conf=|p-.5| (ביטחון), value=eng-mkt (graceful), totals=נטיית-טוטאל
+  const L = todayLens;
+  const lensBtns = ["conf","value","totals"].map(k=>
+    `<button class="${k===L?'on':''}" onclick="setTodayLens('${k}')">${t("lens_"+k)}</button>`).join("");
+  let rows;
+  if(L==="conf"){
+    rows = PICKS.map(p=>({team:`${p.pick} (${p.road?"@":"vs"} ${p.pick===p.home?p.away:p.home})`,
+      v:p.prob+"%", s:p.prob, tier:p.prob>=80?1:p.prob>=70?2:p.prob>=60?3:4}));
+  } else if(L==="value"){
+    rows = PICKS.filter(p=>p.marketProb!=null).map(p=>{const g=Math.round(p.prob-p.marketProb);
+      return {team:`${p.pick}`, v:(g>=0?"+":"")+g+"%", s:g, tier:g>=3?1:g>=0?3:5};});
+  } else { // totals
+    rows = PICKS.filter(p=>p.totalEng!=null).map(p=>({team:`${p.home} vs ${p.away}`,
+      v:String(p.totalEng), s:p.totalEng, tier:p.totalEng>=235?1:p.totalEng>=220?3:5}));
+  }
+  rows.sort((a,b)=>b.s-a.s);
+  const body = rows.length
+    ? `<div class="lens">${lensBtns}</div>` + tierRows(rows, x=>x.v, x=>x.tier, null, null)
+    : `<div class="lens">${lensBtns}</div><p class="chelp">${L==="value"?t("lensNoMkt"):t("lensNoGames")}</p>`;
+  return cubeWrap("today", false, body);
+}
 function renderCubes(){
   const box=document.getElementById("ranks");
   if(typeof CUBES==="undefined" || !CUBES){ box.innerHTML=""; return; }
   let html="";
+  // דירוג-היום (render-only על PICKS, בורר-עדשה) — ראשון, הכי אקשנבילי
+  if(typeof PICKS!=="undefined" && PICKS.length){ html += renderTodayCube(); }
   // 1 · Elo (league, מקובץ-רמות)
   html += cubeWrap("elo", true, tierRows(CUBES.elo,
     x=>x.elo, x=>x.tier+1, null, x=>x.tierName));
-  // 2 · today's teams (מ-PICKS)
-  if(typeof PICKS!=="undefined" && PICKS.length){
-    const tt = PICKS.map(p=>({team:`${p.pick} (${p.road?"@":"vs"} ${p.pick===p.home?p.away:p.home})`,
-      prob:p.prob, tier:p.prob>=80?1:p.prob>=70?2:p.prob>=60?3:4})).sort((a,b)=>b.prob-a.prob);
-    html += cubeWrap("todayTeams", false, tierRows(tt, x=>x.prob+"%", x=>x.tier, null, null));
-    // 3 · today's games (מ-PICKS)
-    const tg = PICKS.map(p=>({team:`${p.home} vs ${p.away}`, prob:p.prob,
-      tier:p.prob>=80?1:p.prob>=70?2:p.prob>=60?3:4,
-      lab:(p.prob>=80?"A+ · ":"")+(p.totalEng!=null?("tot "+p.totalEng):"")})).sort((a,b)=>b.prob-a.prob);
-    html += cubeWrap("todayGames", false, tierRows(tg, x=>x.prob+"%", x=>x.tier, x=>x.lab, null));
-  }
   // 4 · totals (league, לפי net)
   const tl = CUBES.totals.map((x,i)=>({team:x.team, net:x.net, off:x.off, def:x.def,
     tier:i<6?1:i<12?2:i<18?3:i<24?4:5}));
@@ -696,6 +799,9 @@ document.querySelectorAll(".toggle:not(.lang) button").forEach(b=>{
     toTop.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
     window.addEventListener("scroll",()=>{toTop.classList.toggle("show", window.scrollY>300);});
   }
+  // date-picker: סינון "הוכרעו העונה" לפי תאריך (ISO ישיר). ריק → הכל.
+  const dp=document.getElementById("datePick");
+  if(dp) dp.addEventListener("change",()=>{ curDate = dp.value || ""; renderDecided(); });
 })();
 
 applyLang();
