@@ -112,7 +112,7 @@
   .row-sub{font-size:10px;color:var(--faint);font-style:italic}
   .bar{display:flex;height:26px;border-radius:7px;overflow:hidden;font-size:12px;font-weight:700}
   .seg{display:flex;align-items:center;justify-content:center;min-width:0;overflow:hidden;white-space:nowrap;padding:0 4px}
-  .seg.pickseg{background:linear-gradient(90deg,#3f6fd0,var(--blue));color:#0f1115}      /* טקסט כהה — WCAG 1.4.3 */
+  .seg.pickseg{background:linear-gradient(90deg,#5b8def,#83abf6);color:#0f1115}      /* טקסט כהה — WCAG 1.4.3 (≥4.5:1 בכל הגרדיינט) */
   .seg.oppseg{background:var(--panel2);color:var(--muted)}
   .seg.pickseg.mkt{background:linear-gradient(90deg,#9d63e0,#b06bff);color:#0f1115}
   .seg.oppseg.mkt{background:var(--panel2);color:var(--muted)}
@@ -234,9 +234,24 @@
     padding:1px 7px;margin-inline-end:6px;font-weight:700;color:var(--muted)}
   footer button{background:none;border:none;color:var(--blue);cursor:pointer;font-size:11.5px;text-decoration:underline;font-family:inherit}
   #toTop{position:fixed;inset-block-end:18px;inset-inline-end:18px;z-index:50;background:var(--panel2);
-    border:1px solid var(--line);color:var(--ink);width:42px;height:42px;border-radius:50%;cursor:pointer;
+    border:1px solid var(--line);color:var(--ink);width:44px;height:44px;border-radius:50%;cursor:pointer;
     font-size:18px;display:none;align-items:center;justify-content:center}
   #toTop.show{display:flex}
+
+  /* ===== נגישות WCAG 2.1/2.2 AA ===== */
+  /* 2.4.7 פוקוס-נראה — outline ברור על כל אינטראקטיבי */
+  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible,
+  [tabindex]:focus-visible, .chip:focus-visible, .ctl:focus-visible{
+    outline:3px solid var(--amber); outline-offset:2px; border-radius:6px;
+  }
+  summary:focus-visible{outline-offset:-2px}
+  /* 2.5.8 גודל-יעד — מינימום בטוח לכל הכפתורים הקטנים */
+  .lang button, .toggle button, .ctl, .x{min-height:32px}
+  /* 2.3.3 prefers-reduced-motion — מבטל אנימציות/מעברים כשמבוקש */
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{animation-duration:.001ms !important; animation-iteration-count:1 !important;
+      transition-duration:.001ms !important; scroll-behavior:auto !important}
+  }
 </style>
 </head>
 <body>
@@ -358,7 +373,7 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-06-29 22:37", "lastGood": "2026-06-29 22:37"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-06-29 23:01", "lastGood": "2026-06-29 23:01"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 63, "n": 1988}, {"band": "70–80%", "actual": 73, "n": 1433}, {"band": "80–85%", "actual": 80, "n": 444}, {"band": "85%+", "actual": 85, "n": 319}];
 const PICKS = [];
@@ -438,7 +453,7 @@ const I18N = {
     lensNoMkt:"No market data yet — value lens activates when CLV collection starts.",
     lensNoGames:"No games today.", byDate:"By date:",
     navYesterday:"Yesterday", navToday:"Today", navTomorrow:"Tomorrow", navByDate:"By date",
-    noGamesDate:"No games on this date.", dateDep:"date-dependent",
+    noGamesDate:"No games on this date.", dateDep:"date-dependent", backToTop:"Back to top",
     surpriseFlag:"Surprise · favorite on a back-to-back, underdog rested",
     surpriseHonest:"Historically the rested underdog wins ~{u}% here (vs ~{b}% baseline)",
     profLbl:"off/def profile",
@@ -521,7 +536,7 @@ const I18N = {
     lensNoMkt:"אין עדיין נתוני-שוק — עדשת-הערך תיפתח כשאיסוף-ה-CLV יתחיל.",
     lensNoGames:"אין משחקים היום.", byDate:"לפי תאריך:",
     navYesterday:"אתמול", navToday:"היום", navTomorrow:"מחר", navByDate:"לפי תאריך",
-    noGamesDate:"אין משחקים בתאריך זה.", dateDep:"תלוי-תאריך",
+    noGamesDate:"אין משחקים בתאריך זה.", dateDep:"תלוי-תאריך", backToTop:"חזרה למעלה",
     surpriseFlag:"גורם-הפתעה · הפייבוריט בגב-אל-גב, האנדרדוג רענן",
     surpriseHonest:"היסטורית: אנדרדוג-רענן מנצח ~{u}% במצב כזה (מול ~{b}% רגיל)",
     profLbl:"פרופיל התקפה/הגנה",
@@ -650,7 +665,7 @@ function render(filter){
     // דגל גורם-ההפתעה 🔥 (אות מאומת חי +5.4pp) — נתיב נפרד מ-fatigue
     let surpHtml = "";
     if(p.surprise){
-      surpHtml = `<div class="flag">🔥 ${t("surpriseFlag")}</div>`+
+      surpHtml = `<div class="flag"><span aria-hidden="true">🔥</span> ${t("surpriseFlag")}</div>`+
         `<div class="honest">${t("surpriseHonest").replace("{u}",p.surprise.upset_pct).replace("{b}",p.surprise.base_pct)}</div>`;
     }
     // ── בר-מנוע (תמיד): צד-הקריאה מול הצד השני ──
@@ -878,12 +893,17 @@ function applyLang(){
   document.querySelectorAll("[data-i18n]").forEach(el=>{ el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll("[data-i18n-html]").forEach(el=>{ el.innerHTML = t(el.dataset.i18nHtml); });
   document.querySelectorAll(".lang button").forEach(b=> b.classList.toggle("on", b.dataset.lang===LANG));
+  const _tt=document.getElementById("toTop"); if(_tt) _tt.setAttribute("aria-label", t("backToTop"));  // 1.1.1 דו-לשוני
   renderFresh(); renderCalib(); renderTrack(); render(currentFilter); renderNext(); renderDecided(); renderCubes();
 }
 
+// 2.3.3 prefers-reduced-motion — גלילה חלקה רק כשלא-מבוקש-צמצום-תנועה
+function scrollBehavior(){
+  return (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) ? "auto" : "smooth";
+}
 function openHowto(){
   var d = document.getElementById("howto");
-  if(d){ d.open = true; d.scrollIntoView({behavior:"smooth", block:"start"}); }
+  if(d){ d.open = true; d.scrollIntoView({behavior:scrollBehavior(), block:"start"}); }
 }
 
 document.querySelectorAll(".lang button").forEach(b=>{
@@ -912,7 +932,7 @@ document.querySelectorAll(".toggle:not(.lang) button").forEach(b=>{
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModals();});
   const toTop=document.getElementById("toTop");
   if(toTop){
-    toTop.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
+    toTop.onclick=()=>window.scrollTo({top:0,behavior:scrollBehavior()});
     window.addEventListener("scroll",()=>{toTop.classList.toggle("show", window.scrollY>300);});
   }
   // ניווט-תאריך (chips: אתמול/היום/מחר/לפי-תאריך) — מנווט את ה-#grid + הקוביות-היומיות.
