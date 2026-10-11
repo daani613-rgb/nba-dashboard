@@ -373,7 +373,7 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-10-10 15:34", "lastGood": "2026-10-10 15:34"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-10-11 15:57 UTC", "lastGood": "2026-10-11 15:57 UTC", "builtUtc": "2026-10-11T15:57:50Z"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 63, "n": 1988}, {"band": "70–80%", "actual": 73, "n": 1433}, {"band": "80–85%", "actual": 80, "n": 444}, {"band": "85%+", "actual": 85, "n": 319}];
 const PICKS = [];
@@ -387,12 +387,19 @@ const APLUS = {"engine": "nba", "probMin": 0.8, "probScale": "2-way, engine prob
 // ===DATA_END===
 
 // ---- display helpers: reconstruction window + the A+ rule, both filled by dashboard.py ('—' if missing) ----
+// rolling window label from the data's own season range ("2021-22 to 2025-26"): count and range, never hand-written
+function seasonsLabel(w, lang){
+  const m = w && w.seasons ? String(w.seasons).match(/^(\d{4})-\d{2} to (\d{4})-\d{2}$/) : null;
+  if(!m) return "";
+  const k = Number(m[2]) - Number(m[1]) + 1, rng = lang==="he" ? String(w.seasons).replace(" to ", " עד ") : w.seasons;
+  return lang==="he" ? ` חלון מתגלגל: ${k} העונות האחרונות, ${rng}.` : ` Rolling window: the last ${k} seasons, ${rng}.`;
+}
 function reconCalib(lang){
   const c = (typeof RECON !== "undefined" && RECON && RECON.calib) || null;
   if(!c) return lang==="he" ? "שחזור walk-forward על — משחקים, —. לא חלוקת holdout." : "Walk-forward reconstruction over — games, —. Not a held-out split.";
   const n = Number(c.gamesInWindow).toLocaleString("en-US");
-  return lang==="he" ? `שחזור walk-forward על ${n} משחקים, ${c.from} עד ${c.to}. לא חלוקת holdout.`
-                     : `Walk-forward reconstruction over ${n} games, ${c.from} to ${c.to}. Not a held-out split.`;
+  return (lang==="he" ? `שחזור walk-forward על ${n} משחקים, ${c.from} עד ${c.to}. לא חלוקת holdout.`
+                      : `Walk-forward reconstruction over ${n} games, ${c.from} to ${c.to}. Not a held-out split.`) + seasonsLabel(c, lang);
 }
 function aplusSentence(lang){
   const A = (typeof APLUS !== "undefined" && APLUS) || null;
@@ -455,7 +462,7 @@ const I18N = {
     discFooter:"For information and entertainment only · Not betting advice · a prediction is not a profit.",
     discLink:"Disclaimer & Privacy ⟶",
     ranksTitle:"Rankings · 6 cubes",
-    engWinner:"Engine · winner", marketBar:"Market · Pinnacle (no-vig)",
+    engWinner:"Engine · winner", marketBar:"Market (no-vig)",
     marketPending:"Market line collected forward (CLV) — not yet available",
     totalsLbl:"Totals · engine", totalsHonest:"Totals = indication, not yet validated vs market · CLV decides",
     rowWorth:"what it's worth", rowCosts:"what it costs",
@@ -476,7 +483,7 @@ const I18N = {
     profLbl:"off/def profile",
     gT:"How to read this page",
     g1:"<b>The idea.</b> The engine rates every team in Elo and predicts the winner. It speaks on high-confidence (A+) calls and stays quieter otherwise.",
-    g2:"<b>Two bars.</b> Engine (what we think) vs Market (Pinnacle no-vig — \"what it costs\"). The gap between them is the possible value.",
+    g2:"<b>Two bars.</b> Engine (what we think) vs Market (the price without the vig: \"what it costs\"). The gap between them is the possible value.",
     gDemo:"Example: engine 88%, market 85%. Gap +3% = small value window. When engine and market agree (~0 gap) there's no value, and that's fine.",
     g3:`<b>A+ and silence.</b> ${aplusSentence("en")} That's not edge: clear favorites win often.`,
     g4:"<b>Value block & colors.</b> Green = 3–10% gap (value). Teal = >10% (open question). Gray = in line with market (no value). The gap is a <b>hypothesis to measure</b> — CLV decides.",
@@ -538,7 +545,7 @@ const I18N = {
     discFooter:"למידע ובידור בלבד · אינו ייעוץ-הימורים · ניבוי אינו רווח.",
     discLink:"הצהרה ופרטיות ⟶",
     ranksTitle:"דירוגים · 6 קוביות",
-    engWinner:"מנוע · מי מנצח", marketBar:"שוק · Pinnacle (מנוקה-vig)",
+    engWinner:"מנוע · מי מנצח", marketBar:"שוק (מנוקה-vig)",
     marketPending:"קו-השוק נאסף קדימה (CLV) — טרם זמין",
     totalsLbl:"טוטאל · מנוע", totalsHonest:"טוטאל = אינדיקציה, טרם-מאומת מול שוק · CLV יחליט",
     rowWorth:"מה שווה", rowCosts:"מה עולה",
@@ -559,7 +566,7 @@ const I18N = {
     profLbl:"פרופיל התקפה/הגנה",
     gT:"איך לקרוא את הדף",
     g1:"<b>הרעיון.</b> המנוע מדרג כל קבוצה ב-Elo ומנבא מי מנצח. הוא מדבר על קריאות-ביטחון-גבוה (A+) ושותק יותר אחרת.",
-    g2:"<b>שני הברים.</b> בר-מנוע (מה שאנחנו חושבים) מול בר-שוק (Pinnacle מנוקה-vig — \"מה עולה\"). הפער ביניהם הוא ה\"ערך\" האפשרי.",
+    g2:"<b>שני הברים.</b> בר-מנוע (מה שאנחנו חושבים) מול בר-שוק (המחיר אחרי ניכוי ה-vig: \"מה עולה\"). הפער ביניהם הוא ה\"ערך\" האפשרי.",
     gDemo:"דוגמה: מנוע 88%, שוק 85%. פער +3% = חלון-ערך קטן. אם המנוע והשוק מסכימים (פער ~0) — אין ערך, וזה בסדר.",
     g3:`<b>A+ ושתיקה.</b> ${aplusSentence("he")} זה לא edge: פייבוריטים-ברורים מנצחים הרבה.`,
     g4:"<b>בלוק-הערך והצבעים.</b> ירוק = פער 3–10% (חלון-ערך). כחלחל = פער >10% (שאלה-פתוחה). אפור = בקו עם השוק (אין ערך). הפער הוא <b>השערה-למדידה</b> — CLV מכריע.",
@@ -613,7 +620,8 @@ function tierColor(x){ return x==="high"?"var(--t-high)":x==="mid"?"var(--t-mid)
 
 function renderFresh(){
   const fb=document.getElementById("freshness");
-  if(FRESH.status==="stale"){ fb.className="fresh stale";
+  const _age = Date.parse(FRESH.builtUtc || "");   // build clock (UTC); stale after 24h, as on the NFL page
+  if(FRESH.status==="stale" || (!isNaN(_age) && Date.now() - _age > 24*3600*1000)){ fb.className="fresh stale";
     fb.textContent = t("freshStale1") + (FRESH.lastGood || t("freshUnknown")); }
   else{ fb.className="fresh ok"; fb.textContent = t("freshOk") + FRESH.updated; }
 }
@@ -871,18 +879,22 @@ function renderCubes(){
     score:compositeTodayJS(p.prob, eloMap[p.pick]??1500, momMap[p.pick]??0), p:p.prob}))
     .sort((a,b)=>b.score-a.score);
   html += cubeWrap("compToday", false, ct.length?scoreBarRows(ct, x=>`${x.score} · p${x.p}%`, x=>x.score):empty, true);
+  // season-long cubes hold only teams that played this season: fewer than 30 -> say how many; fewer than 2 -> not shown
+  const _np = (CUBES.elo || []).length;
+  const _sn = _np < 30 ? `<p class="chelp">${LANG==="he" ? `${_np} מתוך 30 קבוצות שיחקו העונה עד כה.` : `${_np} of 30 teams have played this season so far.`}</p>` : "";
+  if (_np < 2) { box.innerHTML = html; return; }
   // 4 · composite_overall (Elo+מומנטום) — בר-ציון, ממוין. קבוצה-בעלייה עוקפת דועכת.
-  html += cubeWrap("composite", false, scoreBarRows(CUBES.composite,
+  html += cubeWrap("composite", false, _sn + scoreBarRows(CUBES.composite,
     x=>`${x.score} · Elo ${x.elo} · m${x.mom>=0?'+':''}${x.mom}`, x=>x.score));
   // 5 · elo_power (league, מקובץ-רמות)
-  html += cubeWrap("elo", false, tierRows(CUBES.elo, x=>x.elo, x=>x.tier+1, null, x=>x.tierName));
+  html += cubeWrap("elo", false, _sn + tierRows(CUBES.elo, x=>x.elo, x=>x.tier+1, null, x=>x.tierName));
   // 6 · totals (league, לפי net)
   const tl = CUBES.totals.map((x,i)=>({team:x.team, net:x.net, off:x.off, def:x.def,
     tier:i<6?1:i<12?2:i<18?3:i<24?4:5}));
-  html += cubeWrap("totals", false, tierRows(tl,
+  html += cubeWrap("totals", false, _sn + tierRows(tl,
     x=>(x.net>0?"+":"")+x.net, x=>x.tier, x=>`off ${x.off} · def ${x.def}`, null));
   // 7 · momentum (league, מקובץ-רמות)
-  html += cubeWrap("momentum", false, tierRows(CUBES.momentum,
+  html += cubeWrap("momentum", false, _sn + tierRows(CUBES.momentum,
     x=>(x.mom>0?"+":"")+x.mom, x=>x.tier+1, null, x=>x.tierName));
   box.innerHTML = html;
 }
