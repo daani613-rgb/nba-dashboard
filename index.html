@@ -262,7 +262,7 @@
   <header>
     <div class="head-row">
       <div>
-        <div class="kicker">NBA PREDICTION ENGINE · ELO + 9 STAGES</div>
+        <div class="kicker">NBA PREDICTION ENGINE · ELO</div>
         <h1 data-i18n="h1"></h1>
       </div>
       <div class="toggle lang">
@@ -579,10 +579,8 @@ const I18N = {
   },
 };
 const STAGE = {
-  en:{0:"No data",1:"First spark",2:"Testing pause",3:"Power-building base",4:"Cleansing dip",
-      5:"Broad base-building",6:"First breakout",7:"Final prep",8:"The breakout",9:"Strengthening"},
-  he:{0:"אין נתונים",1:"ניצוץ ראשון",2:"עצירה שבודקת",3:"התכנסות בונה כוח",4:"ירידה שמנקה",
-      5:"בנייה בסיס רחב",6:"פריצה ראשונה",7:"הכנה אחרונה",8:"פריצת הדרך",9:"התחזקות"},
+  en:{0:"No data"},       // stages 1-9 are shown as numbers only (no method names)
+  he:{0:"אין נתונים"},
 };
 
 let LANG = "en";
@@ -727,7 +725,7 @@ function renderCard(g){
   let foot = "";
   if((state==="live" || state==="future") && g.stage!=null){
     const tr=tier(g.stage);
-    const sname = (STAGE[LANG]&&STAGE[LANG][g.stage]!==undefined)?STAGE[LANG][g.stage]:STAGE.en[g.stage];
+    const sname = (STAGE[LANG]||{})[g.stage] || "";
     const cell = (state==="live")
       ? `<span class="cell">${g.cellN>=30 ? t("cellHist1").replace("{acc}", `<b>${g.cellAcc}</b>`).replace("{n}", g.cellN) : t("cellSmall")}</span>`
       : "";
