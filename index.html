@@ -374,7 +374,7 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-10-13 12:46 UTC", "lastGood": "2026-10-13 12:46 UTC", "builtUtc": "2026-10-13T12:46:52Z"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-10-13 16:42 UTC", "lastGood": "2026-10-13 16:42 UTC", "builtUtc": "2026-10-13T16:42:13Z"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 63, "n": 1988}, {"band": "70–80%", "actual": 73, "n": 1433}, {"band": "80–85%", "actual": 80, "n": 444}, {"band": "85%+", "actual": 85, "n": 319}];
 const PICKS = [];
@@ -400,8 +400,8 @@ function reconCalib(lang){
   const c = (typeof RECON !== "undefined" && RECON && RECON.calib) || null;
   if(!c) return lang==="he" ? "שחזור walk-forward על — משחקים, —. לא חלוקת holdout." : "Walk-forward reconstruction over — games, —. Not a held-out split.";
   const n = Number(c.gamesInWindow).toLocaleString("en-US");
-  return (lang==="he" ? `שחזור walk-forward על ${n} משחקים, ${c.from} עד ${c.to}. לא חלוקת holdout.`
-                      : `Walk-forward reconstruction over ${n} games, ${c.from} to ${c.to}. Not a held-out split.`) + seasonsLabel(c, lang);
+  return (lang==="he" ? `שחזור walk-forward על ${n} משחקים, ${__DM(c.from,1)} עד ${__DM(c.to,1)}. לא חלוקת holdout.`
+                      : `Walk-forward reconstruction over ${n} games, ${__DM(c.from,1)} to ${__DM(c.to,1)}. Not a held-out split.`) + seasonsLabel(c, lang);
 }
 function aplusSentence(lang){
   const A = (typeof APLUS !== "undefined" && APLUS) || null;
@@ -591,8 +591,10 @@ function toLocalISO(d){ const p=n=>String(n).padStart(2,"0");
 function addDays(iso, n){ const d=new Date(iso+"T12:00:00"); d.setDate(d.getDate()+n); return toLocalISO(d); }
 function todayISO(){ return toLocalISO(new Date()); }
 
-function fmtDate(s){ const p=String(s).split("-"); if(p.length!==3) return s;
-  return (LANG==="he") ? p[2]+"."+p[1] : p[1]+"."+p[2]; }   // he DD.MM · en MM.DD
+// dates: dd.mm, with a year dd.mm.yyyy, cut from the text so the day shown is the day written (STOP2_PREREGISTER.md)
+function __DM(s,y){ const m=String(s||'').match(/(\d{4})-?(\d{2})-?(\d{2})/); return m?(m[3]+'.'+m[2]+(y?'.'+m[1]:'')):(s||''); }
+function __DMIN(s){ return String(s||'').replace(/(\d{4})-(\d{2})-(\d{2})/,'$3.$2.$1'); }   // a date inside a longer text
+function fmtDate(s){ return __DM(s); }   // dd.mm in both languages (was MM.DD in English)
 function tier(s){ if([6,8,9].includes(s)) return "high"; if([2,3,5,7].includes(s)) return "mid"; return "low"; }
 function tierColor(x){ return x==="high"?"var(--t-high)":x==="mid"?"var(--t-mid)":"var(--t-low)"; }
 
@@ -600,8 +602,8 @@ function renderFresh(){
   const fb=document.getElementById("freshness");
   const _age = Date.parse(FRESH.builtUtc || "");   // build clock (UTC); stale after 24h, as on the NFL page
   if(FRESH.status==="stale" || (!isNaN(_age) && Date.now() - _age > 24*3600*1000)){ fb.className="fresh stale";
-    fb.textContent = t("freshStale1") + (FRESH.lastGood || t("freshUnknown")); }
-  else{ fb.className="fresh ok"; fb.textContent = t("freshOk") + FRESH.updated; }
+    fb.textContent = t("freshStale1") + (FRESH.lastGood ? __DMIN(FRESH.lastGood) : t("freshUnknown")); }
+  else{ fb.className="fresh ok"; fb.textContent = t("freshOk") + __DMIN(FRESH.updated); }
 }
 function renderCalib(){
   document.getElementById("calib").innerHTML = CALIB.map(c=>`
