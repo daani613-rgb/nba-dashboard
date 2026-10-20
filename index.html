@@ -10,7 +10,7 @@
 <style>
   :root{
     --bg:#0c0e14; --panel:#13161f; --panel2:#1a1e29; --line:#222736;
-    --ink:#e9ebf2; --muted:#878da0; --faint:#767d97;  /* faint: 4.73:1 — WCAG AA */
+    --ink:#e9ebf2; --muted:#878da0; --faint:#798099;  /* faint: 4.6:1 or more on every panel (KNOWN_DEFECTS 92) */
     --amber:#f0b429; --amber-dim:#7d5f15;
     --green:#46c08a; --green-d:rgba(70,192,138,.10);
     --red:#e5604d;   --red-d:rgba(229,96,77,.10);
@@ -148,10 +148,10 @@
     padding:6px 10px;font-size:12.5px;color-scheme:dark;font-family:inherit}
   /* ניווט-תאריך (chips, מיושר-בייסבול) */
   .chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 14px}
-  .chips .chip{min-height:38px;padding:7px 15px;border-radius:999px;border:1px solid var(--line);
+  .chips .chip{min-height:44px;padding:7px 15px;border-radius:999px;border:1px solid var(--line);
     background:var(--panel);color:var(--muted);font-family:inherit;font-size:12.5px;cursor:pointer}
   .chips .chip[aria-pressed="true"]{background:var(--amber);color:#1a1407;border-color:var(--amber);font-weight:700}
-  .chips input[type=date]{min-height:38px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);
+  .chips input[type=date]{min-height:44px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);
     background:var(--panel);color:var(--ink);color-scheme:dark;font-family:inherit;font-size:12.5px}
   /* בר-ציון (composite — בלי רמות, ממוין לפי ציון) */
   .srow{display:flex;align-items:center;gap:9px;padding:6px 0;border-top:1px solid var(--line);font-size:13px}
@@ -249,12 +249,15 @@
   }
   summary:focus-visible{outline-offset:-2px}
   /* 2.5.8 גודל-יעד — מינימום בטוח לכל הכפתורים הקטנים */
-  .lang button, .toggle button, .ctl, .x{min-height:32px}
+  .lang button, .toggle button, .ctl, .x{min-height:44px}   /* 44: KNOWN_DEFECTS 92 */
   /* 2.3.3 prefers-reduced-motion — מבטל אנימציות/מעברים כשמבוקש */
   @media (prefers-reduced-motion: reduce){
     *, *::before, *::after{animation-duration:.001ms !important; animation-iteration-count:1 !important;
       transition-duration:.001ms !important; scroll-behavior:auto !important}
   }
+  /* tap targets at least 44 x 44 px (KNOWN_DEFECTS 92) */
+  button{min-height:44px;min-width:44px}
+  summary{min-height:44px}
 </style>
 </head>
 <body>
@@ -374,7 +377,7 @@
 </div>
 
 <script>
-const FRESH = {"status": "ok", "updated": "2026-10-20 14:59 UTC", "lastGood": "2026-10-20 14:59 UTC", "builtUtc": "2026-10-20T14:59:44Z"}; // FRESH_LINE
+const FRESH = {"status": "ok", "updated": "2026-10-20 18:12 UTC", "lastGood": "2026-10-20 18:12 UTC", "builtUtc": "2026-10-20T18:12:29Z"}; // FRESH_LINE
 // ===DATA_START=== (נוצר אוטומטית ע"י dashboard.py)
 const CALIB = [{"band": "60–70%", "actual": 63, "n": 1988}, {"band": "70–80%", "actual": 73, "n": 1433}, {"band": "80–85%", "actual": 80, "n": 444}, {"band": "85%+", "actual": 85, "n": 319}];
 const PICKS = [{"date": "2026-10-20", "home": "NYK", "away": "PHI", "pick": "NYK", "road": false, "prob": 82, "is_aplus": true, "home_prob": 0.818, "stage": 8, "name": "פריצת הדרך", "state": "live", "hp": null, "ap": null, "winner": null, "margin": null, "cellAcc": 87, "cellN": 340, "ok": null, "fatigue": null, "surprise": null, "totalEng": 211.3, "totalProfile": {"home": {"off": 1.3, "def": -8.5, "net": 9.8}, "away": {"off": -2.8, "def": 0.3, "net": -3.2}}, "marketProb": null, "pregame": true}, {"date": "2026-10-20", "home": "DET", "away": "BOS", "pick": "DET", "road": false, "prob": 59, "is_aplus": false, "home_prob": 0.587, "stage": 4, "name": "ירידה שמנקה", "state": "live", "hp": null, "ap": null, "winner": null, "margin": null, "cellAcc": 42, "cellN": 1622, "ok": null, "fatigue": null, "surprise": null, "totalEng": 203.3, "totalProfile": {"home": {"off": -0.6, "def": -6.5, "net": 5.9}, "away": {"off": -1.9, "def": -8.8, "net": 6.9}}, "marketProb": null, "pregame": true}, {"date": "2026-10-20", "home": "SAS", "away": "OKC", "pick": "SAS", "road": false, "prob": 52, "is_aplus": false, "home_prob": 0.522, "stage": 3, "name": "התכנסות בונה כוח", "state": "live", "hp": null, "ap": null, "winner": null, "margin": null, "cellAcc": 63, "cellN": 1160, "ok": null, "fatigue": null, "surprise": null, "totalEng": 216.3, "totalProfile": {"home": {"off": 2.7, "def": -5.1, "net": 7.8}, "away": {"off": 2.8, "def": -5.2, "net": 8.0}}, "marketProb": null, "pregame": true}];
@@ -448,11 +451,11 @@ const I18N = {
     howto5Title:"The caveat",
     howto5:`The fatigue tag is a bias flag, not a prediction. It does not say the favorite will lose — it only says the upset chance is higher than usual. The favorite still wins most of the time. And like the rest of the engine, this was tested against historical results and naive logic, not against bookmaker lines — it's an edge in reading the game, not a promise of easy money.`,
     noteH:"How it goes live",
-    noteBody:`Every number is real, from a backtest on 5,829 test games (seasons 2019-20 to 2023-24), but historical. For live predictions the engine runs on your machine: <code>python fetch_current_season.py</code> then <code>python run_daily.py</code>, which writes the day's predictions straight to the board. Each percent label is the real accuracy measured for that confidence × stage cell; a cell with too small a sample shows "small sample" instead of a number.`,
+    noteBody:`Every number is real, from a backtest on 5,829 test games (seasons 2019-20 to 2023-24), but historical. For live predictions the engine runs on your machine: <code>python fetch_current_season.py</code> then <code>python run_daily.py</code>, which writes the day's predictions straight to the board.`,
     freshOk:"Last updated: ", freshStale1:"⚠ Last update failed — showing data from ", freshUnknown:"unknown",
     actual:"actual ", trSub1:"Accuracy on ", trSub2:" unseen confident predictions",
     vs:"vs", pickLbl:"Pick: ", home:"· home", road:"· away, vs home",
-    conf:"% confidence", cellHist1:"Similar calls were right {acc}% of the time ({n} cases)", cellSmall:"Too few similar calls",
+    conf:"% confidence", cellHist1:"Similar calls so far: {acc}% right of {n}", cellSmall:"Too few similar calls",
     pend:"⏳ pending", correct:"✓ correct", missed:"✗ missed", pendTail:"⏳ Awaiting result",
     pregame:"Before the game", notJournaled:"not in the journal", gapsLine:"This season, decided games with no frozen pre-game record: {n} of {d} since {from}.",
     fatLabelSevere:"⚠️ Bad schedule spot: favorite on a road back-to-back (sharpest)",
@@ -528,11 +531,11 @@ const I18N = {
     howto5Title:"הסייג",
     howto5:`תווית העייפות היא דגל הטיה, לא נבואה. היא לא אומרת שהפייבוריט יפסיד — היא רק אומרת שסיכוי ההפתעה גבוה מהרגיל. הפייבוריט עדיין מנצח רוב הזמן. וכמו שאר המנוע, זה נבדק מול תוצאות היסטוריות והיגיון נאיבי, לא מול קווי מהמרים — זה יתרון בקריאת המשחק, לא הבטחה לכסף קל.`,
     noteH:"איך זה הופך לחי",
-    noteBody:`כל המספרים אמיתיים, מבדיקה לאחור על 5,829 משחקי מבחן (עונות 2019-20 עד 2023-24), אבל היסטוריים. לניבויים חיים המנוע רץ אצלך: <code>python fetch_current_season.py</code> ואז <code>python run_daily.py</code>, שכותב את ניבויי היום ישר ללוח. כל תווית אחוז היא הדיוק האמיתי שנמדד לאותו שילוב של ביטחון × שלב; שילוב עם מדגם קטן מדי יציג «מדגם קטן» במקום מספר.`,
+    noteBody:`כל המספרים אמיתיים, מבדיקה לאחור על 5,829 משחקי מבחן (עונות 2019-20 עד 2023-24), אבל היסטוריים. לניבויים חיים המנוע רץ אצלך: <code>python fetch_current_season.py</code> ואז <code>python run_daily.py</code>, שכותב את ניבויי היום ישר ללוח.`,
     freshOk:"עודכן לאחרונה: ", freshStale1:"⚠ העדכון האחרון נכשל — מוצגים נתונים מ-", freshUnknown:"לא ידוע",
     actual:"בפועל ", trSub1:"דיוק על ", trSub2:" ניבויים בטוחים שלא נראו",
     vs:"נגד", pickLbl:"הניבוי: ", home:"· בית", road:"· חוץ, נגד הבית",
-    conf:"% ביטחון", cellHist1:"תחזיות דומות צדקו ב-{acc}% ({n} מקרים)", cellSmall:"מעט תחזיות דומות",
+    conf:"% ביטחון", cellHist1:"קריאות דומות עד היום: {acc}% נכונות מתוך {n}", cellSmall:"מעט תחזיות דומות",
     pend:"⏳ ממתין", correct:"✓ צדק", missed:"✗ החטיא", pendTail:"⏳ ממתין לתוצאה",
     pregame:"לפני המשחק", notJournaled:"לא נרשם ביומן", gapsLine:"העונה, משחקים שהוכרעו בלי רשומה קפואה מלפני המשחק: {n} מתוך {d} מאז {from}.",
     fatLabelSevere:"⚠️ עמדת-לוח רעה: הפייבוריט ביציאה לדרכים (החריף ביותר)",
@@ -693,8 +696,7 @@ function renderCard(g){
     const tr=tier(g.stage);
     const sname = (STAGE[LANG]||{})[g.stage] || "";
     const cell = (state==="live")
-      ? (g.cellAcc!=null && g.cellN>=30 ? `<span class="cell">${t("cellHist1").replace("{acc}", `<b>${g.cellAcc}</b>`).replace("{n}", g.cellN)}</span>`
-         : (g.cellN>0 && g.cellN<30 ? `<span class="cell">${t("cellSmall")}</span>` : ""))   // no cell value: no number; n<30 is said, n=0 shows nothing
+      ? ""   // the cell line is hidden: its table counts each past game under a stage that already holds that game's result (KNOWN_DEFECTS 112); it returns once build_tables is fixed
       : "";
     foot = `<div class="foot"><span class="badge ${tr}"><span class="num">${g.stage}</span> ${sname}</span>${cell}</div>`;
   }
@@ -937,6 +939,38 @@ function refreshDate(){
 }
 
 applyLang();
+</script>
+<script>/* minus sign in RTL (KNOWN_DEFECTS 89), same code as preview/assets/bidi.js */
+(function () {
+  // A minus that starts a number gets an LRM (U+200E) before it, so in a Hebrew (RTL) line "-15%" keeps its minus on
+  // the left instead of showing as "15%-" (KNOWN_DEFECTS 89). Text only, every render: values are never changed, an
+  // LRM is invisible, and in English (LTR) it changes nothing. Not a minus: a hyphen after a letter, digit or %
+  // ("A-1", "4-3", "2026-10-13", "ב-29.11", "3%-10%"). Idempotent: a minus that already has its LRM is left alone.
+  var RE = /(^|[^\d\w.,%֐-׿‎])([-−])(?=\d)/g, SKIP = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, TEMPLATE: 1, NOSCRIPT: 1 };
+  function fix(n) {
+    var t = n.nodeValue;
+    if (!t || (t.indexOf('-') < 0 && t.indexOf('−') < 0) || !n.parentNode || SKIP[n.parentNode.nodeName]) return;
+    var u = t.replace(RE, '$1‎$2');
+    if (u !== t) n.nodeValue = u;
+  }
+  function walk(r) {
+    if (r.nodeType === 3) return fix(r);
+    if (r.nodeType !== 1 || SKIP[r.nodeName]) return;
+    var w = document.createTreeWalker(r, 4, null), n;
+    while ((n = w.nextNode())) fix(n);
+  }
+  function start() {
+    walk(document.body);
+    new MutationObserver(function (ms) {
+      for (var i = 0; i < ms.length; i++) {
+        var m = ms[i];
+        if (m.type === 'characterData') fix(m.target);
+        else for (var j = 0; j < m.addedNodes.length; j++) walk(m.addedNodes[j]);
+      }
+    }).observe(document.body, { childList: true, subtree: true, characterData: true });
+  }
+  if (document.body) start(); else document.addEventListener('DOMContentLoaded', start);
+})();
 </script>
 </body>
 </html>
